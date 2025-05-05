@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PC | Teacher Attendance v1</title> <link rel="shortcut icon" type="image/png" href="https://img2.pic.in.th/pic/Pakchong_School-removebg-preview.png">
+    <title>PC|Teacherattendance v1</title> <link rel="shortcut icon" type="image/png" href="https://img2.pic.in.th/pic/Pakchong_School-removebg-preview.png">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -467,7 +467,7 @@
                     </div>
                  <footer class="footer mt-4 text-center">
                     <div class="container">
-                         <a href="https://line.me/ti/p/3F7VGrqgUr" target="_blank"><i class="fa-solid fa-comments"></i> สอบถาม/แจ้งปัญหา</a> || ©️KT|Tanasarn Sirak (v5.1)
+                         <a href="https://line.me/ti/p/3F7VGrqgUr" target="_blank"><i class="fa-solid fa-comments"></i> สอบถาม/แจ้งปัญหา</a> || ©️KT|Tanasarn Sirak (v1)
                      </div>
                  </footer>
                  </div> </div> </div> <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -1055,7 +1055,7 @@
 
         async function fetchTeacherData(teacherId) {
             if (!teacherId || SCRIPT_URL.includes('YOUR_SCRIPT_URL')) {
-                Swal.close();
+                // Swal.close(); // Already handled by finally block below
                 if (SCRIPT_URL.includes('YOUR_SCRIPT_URL')) {
                      showSweetAlert('error', 'Config Error', 'SCRIPT_URL not set', false);
                 }
@@ -1063,8 +1063,15 @@
             }
             teacherDataCache = null; // Reset cache
 
+            // Show loading SweetAlert (moved from showLoadingAndFetchTeacher)
+            Swal.fire({
+                title: 'กำลังค้นหาข้อมูลครู...', text: `รหัส: ${teacherId}`,
+                allowOutsideClick: false, allowEscapeKey: false,
+                didOpen: () => { Swal.showLoading(); }
+            });
+
             try {
-                showLoading(true);
+                // showLoading(true); // Loading is handled by Swal now
                 const lookupUrl = `${SCRIPT_URL}?action=getTeacherInfo&id=${encodeURIComponent(teacherId)}`;
                 const response = await fetch(lookupUrl);
 
@@ -1073,9 +1080,24 @@
                  console.log("Teacher Info Received:", data);
 
                 if (data.error) throw new Error(data.error);
-                if (!data.found || !data.teacher) throw new Error(data.message || 'กรุณาติดต่อ <a style="color:#0515f5;cursor:pointer" target="_blank" href="https://line.me/ti/p/3F7VGrqgUr">อ.ธนสาร สีรักษ์</a>');
+                 // *** Check for 'not found' FIRST ***
+                 if (!data.found || !data.teacher) {
+                     // Throw an error to be caught by the catch block, which shows the error SweetAlert
+                     throw new Error(data.message || 'ไม่พบข้อมูลครู กรุณาตรวจสอบรหัส หรือติดต่อ <a style="color:#0515f5;cursor:pointer" target="_blank" href="https://line.me/ti/p/3F7VGrqgUr">อ.ธนสาร สีรักษ์</a>');
+                 }
 
-                // Success - Populate UI
+                // *** Success Path - Close loading Swal and show Success Swal ***
+                if (Swal.isLoading()) { Swal.close(); } // Close loading alert first
+                 Swal.fire({
+                    icon: 'success',
+                    title: 'พบข้อมูล',
+                    html: `<strong>ชื่อ-สกุล:</strong> ${data.teacher.name || 'N/A'}`,
+                    timer: 2000, // Shorter timer for success
+                    timerProgressBar: true,
+                    showConfirmButton: false // No need for confirm button
+                });
+
+                // Populate UI (as before)
                 teacherDataCache = data.teacher;
                 teacherNameSpan.textContent = data.teacher.name || 'N/A';
                 teacherDepartmentSpan.textContent = data.teacher.department || 'N/A';
@@ -1091,18 +1113,40 @@
                 showBaseInfoAndDutyStatus(); // Show next section
 
             } catch (error) {
+                 // *** Error Path (Includes 'Not Found' from the throw above) ***
                  console.error('Fetch Teacher Error:', error);
-                 teacherLookupStatus.textContent = `ข้อผิดพลาด: ${error.message}`;
+                 if (Swal.isLoading()) { Swal.close(); } // Close loading alert if still open
+
+                 teacherLookupStatus.textContent = `ข้อผิดพลาด: ${error.message}`; // Show error near input
                  teacherLookupStatus.classList.add('text-danger');
                  teacherLookupStatus.classList.remove('text-success');
                  hideAllCheckinSections(false); // Hide sections below ID
                  teacherIdInput.focus();
                  teacherDataCache = null;
-                 showSweetAlert('error', 'ค้นหาไม่สำเร็จ!!', `ไม่พบข้อมูลครูผู้สอนรหัสนี้ : ${error.message}`, false);
+
+                 // Show error SweetAlert (this now handles 'not found' as well)
+                 showSweetAlert('error', 'เกิดข้อผิดพลาด / ไม่พบข้อมูล', `รายละเอียด: ${error.message}`, false);
+
              } finally {
-                 if (Swal.isLoading()) Swal.close();
-                 showLoading(false);
+                 // showLoading(false); // Loading handled by Swal
+                 // Ensure Swal is closed if something unexpected happened
+                 if (Swal.isLoading()) { Swal.close(); }
              }
+        }
+
+        // You might need to REMOVE the Swal call from showLoadingAndFetchTeacher
+        // as it's now handled within fetchTeacherData itself.
+        function showLoadingAndFetchTeacher(teacherId) {
+            teacherLookupStatus.textContent = '';
+            /* REMOVED Swal.fire CALL FROM HERE
+            Swal.fire({
+                title: 'กำลังค้นหาข้อมูลครู...', text: `รหัส: ${teacherId}`,
+                allowOutsideClick: false, allowEscapeKey: false,
+                didOpen: () => { Swal.showLoading(); }
+            });
+            */
+            hideAllCheckinSections(false); // Keep ID, hide below
+            fetchTeacherData(teacherId); // Call the modified fetchTeacherData
         }
 
         function showBaseInfoAndDutyStatus() {
