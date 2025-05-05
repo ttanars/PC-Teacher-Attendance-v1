@@ -245,16 +245,18 @@
                      </div>
                 <div id="checkinPage" class="page-section">
 				
-				<!-- <div class="row"><i class="fas fa-clock me-2"></i><b><div class="clock text-light mt-1 ml-1 text-center text-dark" id="MyClockDisplay" onload="showTime()"></div></div> -->
+				<div class="row alert alert-info text-center shadow-sm py-2" role="alert" ><b><div class="clock text-light mt-1 ml-1 text-center text-dark" id="MyClockDisplay" onload="showTime()"></div></div>
                     
-                     <div id="clock-checkin" class="alert alert-info text-center shadow-sm py-2" role="alert">
+                     <!-- <div id="clock-checkin" class="alert alert-info text-center shadow-sm py-2" role="alert">
                          <i class="fas fa-clock me-2"></i><b> กำลังโหลดเวลา...
-                     </div>
-					<h5 class="mb-2"><i class="fas fa-edit me-2 text-primary"></i> บันทึกข้อมูลการปฏิบัติหน้าที่</h5>
+                     </div> -->
+					<h5 class="mb-4"><i class="fas fa-edit me-2 text-primary"></i> บันทึกข้อมูลการปฏิบัติหน้าที่</h5>
                     <form id="checkinForm" novalidate>
                          <div class="mb-3">
-                             <label for="teacherId" class="form-label"><i class="fas fa-id-card me-2 text-primary"></i>รหัสครูผู้สอน (4 ตัว)</label>
-                             <input type="tel" class="form-control form-control" id="teacherId" name="teacherId" required placeholder="กรอกรหัสครู (4 ตัว)" maxlength="4" inputmode="numeric" pattern="[0-9]*"> <div id="teacherLookupStatus" class="form-text mt-1 small text-muted"></div>
+                             <!--<label for="teacherId" class="form-label"><i class="fas fa-id-card me-2 text-primary"></i>รหัสครูผู้สอน (4 ตัว)</label> -->
+							   <label for="teacherId" style="margin-left: 12px; margin-left: 15px; 
+                             margin-top: -14px; position: absolute; background-color: white; border: 2px solid white;"><i class="fas fa-id-card me-2 text-primary"></i>รหัสครูผู้สอน (4 ตัว)</label>
+                             <input type="tel" class="form-control form-control-xl border border-danger "  style="height: 3.8rem; id="teacherId" name="teacherId" required placeholder="กรอกรหัสครู (4 ตัว)" maxlength="4" inputmode="numeric" pattern="[0-9]*"> <div id="teacherLookupStatus" class="form-text mt-1 small text-muted"></div>
                          </div>
 
                          <div id="teacherInfo" class="form-section mb-3" style="display:none;">
@@ -359,13 +361,15 @@
                            <h5 class="mb-3 mt-3"><i class="fas fa-search me-2 text-primary"></i><b> ค้นหาสถิติการปฏิบัติหน้าที่</h5>
                      </div>
 
-                    <div class="row g-2 mb-3 align-items-end bg-light p-2 rounded border shadow-sm">
+                    <div class="row g-2 mb-3 align-items-end bg-light p-3 rounded border shadow-sm">
                         <div class="col-md-4">
-                            <label for="searchTeacherId" class="form-label small">กรอกรหัสครู (4 ตัว):</label>
-                            <input type="tel" class="form-control form-control-sm" id="searchTeacherId" placeholder="กรอกรหัสครู (4 ตัว)" maxlength="4" inputmode="numeric" pattern="[0-9]*">
+                            <!--<label for="searchTeacherId" class="form-label small">กรอกรหัสครู (4 ตัว):</label>-->
+							<label for="searchTeacherId" style="margin-left: 12px; margin-left: 15px; 
+                             margin-top: -14px; position: absolute; background-color: white; border: 2px solid white;"><i class="fas fa-id-card me-2 text-primary"></i>รหัสครูผู้สอน (4 ตัว)</label>
+                            <input type="tel" class="form-control form-control  border border-danger "  style="height: 3.3rem;" id="searchTeacherId" placeholder="กรอกรหัสครู (4 ตัว)" maxlength="4" inputmode="numeric" pattern="[0-9]*">
                         </div>
                         <div class="col-md-3 d-grid">
-                            <button class="btn btn-sm btn-primary" id="searchStatsBtn">
+                            <button class="btn btn-lg btn-primary" id="searchStatsBtn">
                                 <i class="fas fa-search"></i> ค้นหา
                             </button>
                         </div>
