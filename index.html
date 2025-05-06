@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PC | Teacher Attendance v1</title> <link rel="shortcut icon" type="image/png" href="https://img2.pic.in.th/pic/Pakchong_School-removebg-preview.png">
+    <title>PC|Teacherattendance v1</title> <link rel="shortcut icon" type="image/png" href="https://img2.pic.in.th/pic/Pakchong_School-removebg-preview.png">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -18,9 +18,10 @@
         body { background-color: #f8f9fa; font-family: 'Sarabun', sans-serif; }
         .page-section { display: none; } /* Hide all sections initially */
         .page-section.active { display: block; } /* Show active section */
-        #schoolBanner { max-height: 290px; width: 100%; object-fit: cover; margin-bottom: 0.2rem; } /* Banner style */
+        #schoolBanner { max-height: 300px; width: 100%; object-fit: cover; margin-bottom: 0.2rem; } /* Banner style */
         #schoolLogo { max-height: 60px; width: auto; }
-        #clock-home, #clock-checkin { font-size: 1.0rem; font-weight: bold; }
+        #clock-home { font-size: 1.0rem; font-weight: bold; }
+        #MyClockDisplay { font-size: 1.0rem; font-weight: bold;} /* For checkin page clock */
         .teacher-photo { width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 3px solid #dee2e6; }
         .signature-pad-container { position: relative; width: 100%; height: 150px; background-color: #ffffff; cursor: crosshair; border: 1px solid #ced4da; border-radius: 0.375rem; }
         #signatureCanvas { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 0.375rem; }
@@ -74,7 +75,7 @@
             div.dataTables_wrapper div.dataTables_filter { text-align: left !important; float: none !important; }
             div.dataTables_wrapper div.dataTables_length {text-align: left !important; float: none !important; margin-top: 0.5rem;}
             div.dataTables_wrapper div.dataTables_filter input { width: auto;}
-             #schoolBanner { max-height: 150px; } /* Smaller banner on mobile */
+             #schoolBanner { max-height: 200px; } /* Smaller banner on mobile */
         }
     </style>
 </head>
@@ -90,8 +91,8 @@
         <div class="card shadow-sm border-primary position-relative">
 
             <div class="card-body p-3 p-md-4">
-				
-                <img src="https://lh5.googleusercontent.com/d/1v1vBqESxt2BT37goqT0UGvEuw7yjKCTy" alt="แบนเนอร์โรงเรียน" id="schoolBanner" class="img-fluid rounded"> <div class="container text-center my-3 main-nav btn-group shadow-sm flex-wrap" role="group" aria-label="Main Navigation"> <button type="button" class="btn btn-outline-primary active" data-target="homePage">
+
+                <img src="https://lh5.googleusercontent.com/d/1fo0zr7v4H4EPKYyS8nK_a6MDawQ1oBS4" alt="แบนเนอร์โรงเรียน" id="schoolBanner" class="img-fluid rounded"> <div class="container text-center my-3 main-nav btn-group shadow-sm flex-wrap" role="group" aria-label="Main Navigation"> <button type="button" class="btn btn-outline-primary active" data-target="homePage">
                      <i class="fas fa-home me-1"></i> หน้าแรก
                      </button>
                     <button type="button" class="btn btn-outline-primary" data-target="dashboardPage">
@@ -107,14 +108,14 @@
 
 
                 <div id="homePage" class="page-section active">
-				
-				<div class="container-fluid mt-0 mb-1 bg-light">
-				<marquee behavior="scroll" direction="left" 
-				style="color:	#000000; font-size: 18px;mt-2 mb-2" onmouseover="this.stop();" onmouseout="this.start();"><h6 style="mt-2">
-				<h5><img src="https://lh5.googleusercontent.com/d/1cD2nVKNscJg1DJPnkaakah7Nz4ez_BZS" height="12" width="25" >&nbsp;ยินดีต้อนรับเข้าสู่ระบบลงเวลาครูเวรประจำวัน โรงเรียนปากช่อง :: ออกแบบและพัฒนาโดย KT | Tanasarn Sirak&nbsp;<img src="https://lh5.googleusercontent.com/d/1cD2nVKNscJg1DJPnkaakah7Nz4ez_BZS" height="12" width="25" ></h5></marquee>        
-				</div>
-				
-				
+
+                <div class="container-fluid mt-0 mb-1 bg-light">
+                <marquee behavior="scroll" direction="left"
+                style="color:	#000000; font-size: 18px;mt-2 mb-2" onmouseover="this.stop();" onmouseout="this.start();"><h6 style="mt-2">
+                <h5><img src="https://lh5.googleusercontent.com/d/1cD2nVKNscJg1DJPnkaakah7Nz4ez_BZS" height="12" width="25" > ยินดีต้อนรับเข้าสู่ระบบลงเวลาครูเวรประจำวัน โรงเรียนปากช่อง :: ออกแบบและพัฒนาโดย KT | Tanasarn Sirak <img src="https://lh5.googleusercontent.com/d/1cD2nVKNscJg1DJPnkaakah7Nz4ez_BZS" height="12" width="25" ></h5></marquee>
+                </div>
+
+
                     <div id="clock-home" class="alert alert-info text-center shadow-sm py-2 mt-3" role="alert">
                          <i class="fas fa-clock me-2"></i> กำลังโหลดเวลา...
                      </div>
@@ -122,11 +123,13 @@
                     <div class="text mb-4">
                         <div id="info" style="font-size:14px" class="alert alert-warning text-left shadow-sm" role="alert">
                             <i class="fas fa-info-circle me-2"></i><b> คำชี้แจงการลงเวลา</b>
-                            <br>1. <b>ครูเวรยืนประตูและครูตรวจอาคาร ลงเวลา 2 ครั้ง คือ ช่วงเช้าและช่วงเย็นที่ไปปฏิบัติหน้าที่</b></br>
-                            2. <b>ครูเวรยืนประตู </b> ลงเวลาเช้า : <b>07:00-07.20 น.</b> || ลงเวลาเย็น : <b>16:20-17.10 น.</b></br>
-                            3. <b>ครูตรวจอาคาร >></b> เช้า : <b>07:00-07.50 น.</b> || เย็น : <b>16:20-17.10 น.</b></br>
-                            4. คลิกที่ปุ่ม <button type="button" class="btn btn-sm btn-outline-primary disabled py-0"><i class="fas fa-edit me-1"></i> บันทึกข้อมูล</button> ด้านบนเพื่อลงเวลา </br>
-                            5. สอบถาม/แจ้งปัญหาการใช้งาน 👉 <a style="color:#000;cursor:pointer" target="_blank" href="https://line.me/ti/p/3F7VGrqgUr">อ.ธนสาร สีรักษ์</a>
+                            <br>1. <b>ครูผู้ปฏิบัติหน้าที่ ลงเวลาตามช่วงเวลาที่กำหนด</b></br>
+                            2. <b>ครูเวรยืนประตู:</b> เช้า <b>07:00-07:20 น.</b> || บ่าย <b>15:50-17:10 น.</b></br>
+                            3. <b>ครูตรวจอาคาร:</b> เช้า <b>07:00-07:50 น.</b> || บ่าย <b>15:50-17:10 น.</b></br>
+                            4. <b>ครูระดับ:</b> เช้า <b>07:40-08:00 น.</b></br>
+                            5. <b>กรรมการประจำจุด:</b> เช้า <b>07:40-09:00 น.</b></br>
+                            6. คลิกที่ปุ่ม <button type="button" class="btn btn-sm btn-outline-primary disabled py-0"><i class="fas fa-edit me-1"></i> บันทึกข้อมูล</button> ด้านบนเพื่อลงเวลา </br>
+                            7. สอบถาม/แจ้งปัญหาการใช้งาน 👉 <a style="color:#000;cursor:pointer" target="_blank" href="https://line.me/ti/p/3F7VGrqgUr">อ.ธนสาร สีรักษ์</a>
                         </div>
                         <hr>
 
@@ -161,6 +164,18 @@
                             </div>
                         </div>
                         <hr>
+						
+						                    <div class="text-center my-4"> <button type="button" class="btn btn-success btn-lg mx-2" id="goToAttendanceBtn">
+                            <i class="fas fa-calendar-check me-2"></i>ลงเวลาปฏิบัติหน้าที่ประจำวัน
+                        </button>
+                        <a href="https://liff.line.me/1657056127-3k2w6bg7" target="_blank" class="btn btn-info btn-lg mx-2" role="button">
+                            <i class="fas fa-user-check me-2"></i>เช็คชื่อนักเรียน
+                        </a>
+                    </div>
+						
+						
+						
+						
                          </div>
                       <div class="text-center mt-4">
                          <a style="color:black;text-decoration:none;font-size:12px"><b><i class="fas fa-chart-line"></i> ผู้ใช้งาน : </b></a>
@@ -168,10 +183,10 @@
                     </div>
                 </div>
                 <div id="dashboardPage" class="page-section">
-				<div id="dashboardPage-t" class="alert alert-info text-center shadow-sm py-2" role="alert">
+                <div id="dashboardPage-t" class="alert alert-info text-center shadow-sm py-2" role="alert">
                            <h5 class="mb-3 mt-3"><i class="fas fa-tachometer-alt me-2 text-primary"></i><b> Dashboard สรุปข้อมูล</h5>
                      </div>
-				
+
 
                      <div class="row g-3 mb-3">
                          <div class="col-md-4">
@@ -218,6 +233,8 @@
                                  <option value="all" selected>ทั้งหมด</option>
                                  <option value="เวรยืนประตู">เวรยืนประตู</option>
                                  <option value="ตรวจอาคาร">ตรวจอาคาร</option>
+                                 <option value="ระดับ">ระดับ</option>
+                                 <option value="กรรมการประจำจุด">กรรมการประจำจุด</option>
                                  <option value="ลา">ลา</option>
                                  <option value="ไปราชการ">ไปราชการ</option>
                                  <option value="มา (ไม่ระบุ)">มา (ไม่ระบุ)</option>
@@ -244,17 +261,13 @@
                      </div>
                      </div>
                 <div id="checkinPage" class="page-section">
-				
-				<div class="row alert alert-info text-center shadow-sm py-2" role="alert" ><b><div class="clock text-light mt-1 ml-1 text-center text-dark" id="MyClockDisplay" onload="showTime()"></div></div>
-                    
-                     <!-- <div id="clock-checkin" class="alert alert-info text-center shadow-sm py-2" role="alert">
-                         <i class="fas fa-clock me-2"></i><b> กำลังโหลดเวลา...
-                     </div> -->
-					<h5 class="mb-4"><i class="fas fa-edit me-2 text-primary"></i> บันทึกข้อมูลการปฏิบัติหน้าที่</h5>
+
+                <div class="row alert alert-info text-center shadow-sm py-2" role="alert" ><b><div class="text-dark mt-1 ml-1 text-center" id="MyClockDisplay" onload="showTime()"></div></b></div>
+
+                    <h5 class="mb-4"><i class="fas fa-edit me-2 text-primary"></i> บันทึกข้อมูลการปฏิบัติหน้าที่</h5>
                     <form id="checkinForm" novalidate>
                          <div class="mb-3">
-                             <!--<label for="teacherId" class="form-label"><i class="fas fa-id-card me-2 text-primary"></i>รหัสครูผู้สอน (4 ตัว)</label> -->
-							   <label for="teacherId" style="margin-left: 12px; margin-left: 15px; 
+                             <label for="teacherId" style="margin-left: 12px; margin-left: 15px;
                              margin-top: -14px; position: absolute; background-color: white; border: 2px solid white;"><i class="fas fa-id-card me-2 text-primary"></i>รหัสครูผู้สอน (4 ตัว)</label>
                              <input type="tel" class="form-control form-control-xl border border-danger "  style="height: 3.8rem;" id="teacherId" name="teacherId" required placeholder="กรอกรหัสครู (4 ตัว)" maxlength="4" inputmode="numeric" pattern="[0-9]*"> <div id="teacherLookupStatus" class="form-text mt-1 small text-muted"></div>
                          </div>
@@ -303,6 +316,14 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="dutyType" id="dutyBuilding" value="ตรวจอาคาร">
                                 <label class="form-check-label" for="dutyBuilding"> <i class="fas fa-building text-warning me-1"></i> ตรวจอาคาร </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="dutyType" id="dutyLevel" value="ระดับ">
+                                <label class="form-check-label" for="dutyLevel"> <i class="fas fa-chalkboard-teacher text-info me-1"></i> ระดับ </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="dutyType" id="dutyPointCommittee" value="กรรมการประจำจุด">
+                                <label class="form-check-label" for="dutyPointCommittee"> <i class="fas fa-users-cog text-secondary me-1"></i> กรรมการประจำจุด </label>
                             </div>
                             <div id="dutyTypeError" class="invalid-feedback d-block small"></div>
                         </div>
@@ -357,14 +378,13 @@
                          <div id="statusMessage" class="mt-3 small"></div> </form>
                 </div>
                  <div id="searchPage" class="page-section">
-				    <div id="searchPage-t" class="alert alert-info text-center shadow-sm py-2" role="alert">
+                    <div id="searchPage-t" class="alert alert-info text-center shadow-sm py-2" role="alert">
                            <h5 class="mb-3 mt-3"><i class="fas fa-search me-2 text-primary"></i><b> ค้นหาสถิติการปฏิบัติหน้าที่</h5>
                      </div>
 
                     <div class="row g-2 mb-3 align-items-end bg-light p-3 rounded border shadow-sm">
                         <div class="col-md-4">
-                            <!--<label for="searchTeacherId" class="form-label small">กรอกรหัสครู (4 ตัว):</label>-->
-							<label for="searchTeacherId" style="margin-left: 12px; margin-left: 15px; 
+                            <label for="searchTeacherId" style="margin-left: 12px; margin-left: 15px;
                              margin-top: -14px; position: absolute; background-color: white; border: 2px solid white;"><i class="fas fa-id-card me-2 text-primary"></i>รหัสครูผู้สอน (4 ตัว)</label>
                             <input type="tel" class="form-control form-control  border border-danger "  style="height: 3.3rem;" id="searchTeacherId" placeholder="กรอกรหัสครู (4 ตัว)" maxlength="4" inputmode="numeric" pattern="[0-9]*">
                         </div>
@@ -423,12 +443,12 @@
                                 <div class="col-auto">
                                     <img src="https://placehold.co/80x80/adb5bd/ffffff?text=?" alt="รูปครู" id="statsTeacherPhoto" class="rounded-circle">
                                 </div>
-								<div class="col-auto">
+                                <div class="col-auto">
                                     <h6 class="mb-1" >ชื่อ - สกุล :: </h6>
                                     <p class="mb-0 small-text text-muted" >กลุ่มสาระฯ :: </p>
                                     <p class="mb-0 small-text text-muted" >ระดับชั้น:: </p>
                                 </div>
-								
+
                                 <div class="col-auto">
                                     <h6 class="mb-1" id="statsTeacherName">ชื่อ - สกุล</h6>
                                     <p class="mb-0 small-text text-muted" id="statsTeacherDepartment">กลุ่มสาระการเรียนรู้</p>
@@ -444,8 +464,11 @@
                            <div class="col-md-4">
                                <label for="statsDutyFilter" class="form-label small mb-0">กรองการปฏิบัติหน้าที่:</label>
                                <select class="form-select form-select-sm" id="statsDutyFilter">
-                                   <option value="" selected>ทั้งหมด</option> <option value="เวรยืนประตู">เวรยืนประตู</option>
+                                   <option value="" selected>ทั้งหมด</option>
+                                   <option value="เวรยืนประตู">เวรยืนประตู</option>
                                    <option value="ตรวจอาคาร">ตรวจอาคาร</option>
+                                   <option value="ระดับ">ระดับ</option>
+                                   <option value="กรรมการประจำจุด">กรรมการประจำจุด</option>
                                    <option value="ลา">ลา</option>
                                    <option value="ไปราชการ">ไปราชการ</option>
                                    <option value="มา \(ไม่ระบุ\)">มา (ไม่ระบุ)</option> </select>
@@ -474,10 +497,12 @@
                          <a href="https://line.me/ti/p/3F7VGrqgUr" target="_blank"><i class="fa-solid fa-comments"></i> สอบถาม/แจ้งปัญหา</a> || ©️KT|Tanasarn Sirak (v1)
                      </div>
                  </footer>
-                 </div> </div> </div> <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+                 </div> </div> </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.2.0/dist/signature_pad.umd.min.js"></script> <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.2.0/dist/signature_pad.umd.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment/locale/th.js"></script>
@@ -486,6 +511,29 @@
         // --- Apps Script Web App URL ---
         // !!! สำคัญ: ใส่ URL ที่ถูกต้องหลังจาก Deploy Apps Script v5.1 (ที่แก้ไขแล้ว) !!!
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxGDiaBYxsXesotxCB-8sreCkYrRl4hUC0LTqCnXrSp8_QYM8r3YNVyZ3HYDyaHdmGeKw/exec'; // <<--- PASTE YOUR DEPLOYED URL HERE
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // ... (existing DOMContentLoaded code) ...
+
+    const goToAttendanceBtn = document.getElementById('goToAttendanceBtn');
+    if (goToAttendanceBtn) {
+        goToAttendanceBtn.addEventListener('click', () => {
+            switchPage('checkinPage');
+        });
+    }
+});
+
+
+
+
+
+
+
+
+
 
         // --- DOM Elements ---
         const mainNavButtons = document.querySelectorAll('.main-nav .btn');
@@ -509,15 +557,15 @@
         const gateDutyCountEl = document.getElementById('gateDutyCount');
         const buildingDutyCountEl = document.getElementById('buildingDutyCount');
         const dashboardDateFilterEl = document.getElementById('dashboardDateFilter');
-        const dashboardLevelFilterEl = document.getElementById('dashboardLevelFilter'); // New
+        const dashboardLevelFilterEl = document.getElementById('dashboardLevelFilter');
         const dashboardDutyFilterEl = document.getElementById('dashboardDutyFilter');
         const refreshDashboardBtn = document.getElementById('refreshDashboardBtn');
-        const dashboardTableEl = $('#dashboardTable'); // jQuery selector
+        const dashboardTableEl = $('#dashboardTable');
         let dashboardDataTable = null;
         const dashboardTableDateEl = document.getElementById('dashboardTableDate');
 
         // Check-in Elements
-        const clockElementCheckin = document.getElementById('clock-checkin');
+        const MyClockDisplay = document.getElementById('MyClockDisplay'); // For check-in page clock
         const checkinForm = document.getElementById('checkinForm');
         const teacherIdInput = document.getElementById('teacherId');
         const teacherLookupStatus = document.getElementById('teacherLookupStatus');
@@ -530,7 +578,7 @@
         const photoSection = document.getElementById('photoSection');
         const submitButtonSection = document.getElementById('submitButtonSection');
         const dutySubSectionsLoading = document.getElementById('dutySubSectionsLoading');
-        const teacherPhoto = document.getElementById('teacherPhoto'); // Profile photo on check-in page
+        const teacherPhoto = document.getElementById('teacherPhoto');
         const teacherNameSpan = document.getElementById('teacherName');
         const teacherDepartmentSpan = document.getElementById('teacherDepartment');
         const teacherPositionSpan = document.getElementById('teacherPosition');
@@ -553,83 +601,88 @@
         const signatureErrorDiv = document.getElementById('signatureError');
         const videoFeed = document.getElementById('videoFeed');
         const photoCanvas = document.getElementById('photoCanvas');
-        const capturedPhotoPreview = document.getElementById('capturedPhotoPreview'); // Check-in photo preview
-        const photoDataInput = document.getElementById('photoData'); // Check-in photo base64
+        const capturedPhotoPreview = document.getElementById('capturedPhotoPreview');
+        const photoDataInput = document.getElementById('photoData');
         const startCameraBtn = document.getElementById('startCameraBtn');
         const capturePhotoBtn = document.getElementById('capturePhotoBtn');
         const resetPhotoBtn = document.getElementById('resetPhotoBtn');
         const cameraErrorDiv = document.getElementById('cameraError');
         const photoErrorDiv = document.getElementById('photoError');
         const submitBtn = document.getElementById('submitBtn');
-        const statusMessage = document.getElementById('statusMessage'); // For check-in status
+        const statusMessage = document.getElementById('statusMessage');
 
         // Search Statistics Elements
         const searchTeacherIdInput = document.getElementById('searchTeacherId');
         const searchStatsBtn = document.getElementById('searchStatsBtn');
         const searchResultArea = document.getElementById('searchResultArea');
-        // -- Stats Cards
         const statsTotalDaysEl = document.getElementById('statsTotalDays');
         const statsPresentDaysEl = document.getElementById('statsPresentDays');
         const statsLeaveDaysEl = document.getElementById('statsLeaveDays');
         const statsTripDaysEl = document.getElementById('statsTripDays');
-        // -- Teacher Info
         const statsTeacherInfoDiv = document.getElementById('statsTeacherInfo');
-        const statsTeacherPhoto = document.getElementById('statsTeacherPhoto'); // Profile photo on stats page
+        const statsTeacherPhoto = document.getElementById('statsTeacherPhoto');
         const statsTeacherName = document.getElementById('statsTeacherName');
         const statsTeacherDepartment = document.getElementById('statsTeacherDepartment');
-        const statsTeacherLevel = document.getElementById('statsTeacherLevel'); // Added Level display
-        // -- Filters
-        const statsDateFilterEl = document.getElementById('statsDateFilter'); // New Date Filter
-        const statsDutyFilterEl = document.getElementById('statsDutyFilter'); // New Duty Filter
-        const resetStatsFilterBtn = document.getElementById('resetStatsFilterBtn'); // New Reset Button
-        // -- Table
-        const statsTableEl = $('#statsTable'); // jQuery selector
+        const statsTeacherLevel = document.getElementById('statsTeacherLevel');
+        const statsDateFilterEl = document.getElementById('statsDateFilter');
+        const statsDutyFilterEl = document.getElementById('statsDutyFilter');
+        const resetStatsFilterBtn = document.getElementById('resetStatsFilterBtn');
+        const statsTableEl = $('#statsTable');
         let statsDataTable = null;
-        const searchMessage = document.getElementById('searchMessage'); // For search status
+        const searchMessage = document.getElementById('searchMessage');
 
         // --- State Variables ---
         let signaturePad; let stream = null; let teacherDataCache = null;
         let locationWatcher = null; let isSubmitting = false;
-        let checkinAllowed = false; let currentCheckinWindow = null;
+        //let checkinAllowed = false; // Replaced by more specific logic
+        //let currentCheckinWindow = null; // Replaced by more specific logic
         let locationAcquired = false;
-        let dashboardDataCache = null; // Cache for dashboard table data
-        let statsDataCache = null; // Cache for stats table data
+        let dashboardDataCache = null;
+        let statsDataCache = null;
 
         // --- Constants ---
-        // Client-side time check values (should match server-side if possible)
-        const MORNING_START_TIME = "07:00";
-        const MORNING_END_TIME = "07:50"; // Ensure this matches Apps Script
-        const AFTERNOON_START_TIME = "16:20"; // Ensure this matches Apps Script
-        const AFTERNOON_END_TIME = "17:10"; // Ensure this matches Apps Script
         const PLACEHOLDER_IMG = 'https://placehold.co/100x100/adb5bd/ffffff?text=?';
-        const DEFAULT_PROFILE_IMG = 'https://placehold.co/40x40/adb5bd/ffffff?text=?'; // For tables (profile pic)
-        const CHECKIN_PHOTO_PLACEHOLDER = 'https://placehold.co/40x40/e9ecef/6c757d?text=N/A'; // For tables (check-in pic)
+        const DEFAULT_PROFILE_IMG = 'https://placehold.co/40x40/adb5bd/ffffff?text=?';
+        const CHECKIN_PHOTO_PLACEHOLDER = 'https://placehold.co/40x40/e9ecef/6c757d?text=N/A';
         const PHOTO_PREVIEW_PLACEHOLDER = 'https://placehold.co/300x200/e9ecef/6c757d?text=%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87';
+
+        // New/Updated specific time constants based on your request
+        const GATE_DUTY_MORNING_START = "07:00";
+        const GATE_DUTY_MORNING_END = "07:20";
+        const GATE_DUTY_AFTERNOON_START = "15:50";
+        const GATE_DUTY_AFTERNOON_END = "17:10";
+
+        const BUILDING_CHECK_MORNING_START = "07:00";
+        const BUILDING_CHECK_MORNING_END = "07:50";
+        const BUILDING_CHECK_AFTERNOON_START = "15:50";
+        const BUILDING_CHECK_AFTERNOON_END = "17:10";
+
+        const LEVEL_DUTY_MORNING_START = "07:40";
+        const LEVEL_DUTY_MORNING_END = "08:00";
+
+        const POINT_COMMITTEE_DUTY_MORNING_START = "07:40";
+        const POINT_COMMITTEE_DUTY_MORNING_END = "09:00";
 
         // --- Initialization ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Check URL immediately
-            if (!SCRIPT_URL || SCRIPT_URL.includes('YOUR_SCRIPT_URL') || SCRIPT_URL.length < 60) { // Basic check
+            if (!SCRIPT_URL || SCRIPT_URL.includes('YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') || SCRIPT_URL.length < 60) {
                  showSweetAlert('error','Config Error', 'กรุณาตั้งค่า SCRIPT_URL ในโค้ด HTML ให้ถูกต้องด้วย URL ที่ได้จากการ Deploy Apps Script', false);
                  document.querySelectorAll('button, input, select, textarea').forEach(el => el.disabled = true);
-                 return; // Stop further execution
+                 return;
             }
 
-            // Setup Moment.js locale
             moment.locale('th');
-
             initializeNavigation();
-            initializeClock(); // Update clock on load
+            // initializeClock(); // showTime() function handles the checkin clock, home clock updates in updateClockAndButtonState
             initializeSignaturePad();
-            initializeDashboard(); // Includes table and filters
-            initializeSearchStats(); // Includes table and filters
+            initializeDashboard();
+            initializeSearchStats();
             initializeCheckinFormLogic();
 
-            setInterval(updateClockAndButtonState, 1000); // Update clock and check-in button state
+            setInterval(updateClockAndButtonState, 1000);
             window.addEventListener('resize', resizeCanvas);
-
-             // Activate the default page (Home)
-             switchPage('homePage');
+            switchPage('homePage');
+            showTime(); // Start the check-in page clock if that's the mechanism
         });
 
         // --- Helper Functions ---
@@ -638,22 +691,27 @@
             if (show) {
                  pageLoadingOverlay.classList.add('active');
             } else {
-                 // Delay hiding slightly to prevent flicker if content loads quickly
                  setTimeout(() => pageLoadingOverlay.classList.remove('active'), 200);
              }
         }
 
-        function showSweetAlert(icon, title, html = '', timer = true) {
-             const config = { icon: icon, title: title, html: html, confirmButtonText: 'ปิด' };
-             if (timer) config.timer = icon === 'success' ? 2500 : 4000;
-             if (timer) config.timerProgressBar = true;
-             Swal.fire(config);
+        function showSweetAlert(icon, title, html = '', timerOrDuration = true) {
+            const config = { icon: icon, title: title, html: html, confirmButtonText: 'ปิด' };
+            if (typeof timerOrDuration === 'boolean' && timerOrDuration) { // Original boolean logic for auto-timer
+                config.timer = icon === 'success' ? 2500 : 4000;
+                config.timerProgressBar = true;
+            } else if (typeof timerOrDuration === 'number') { // Allow specific duration
+                config.timer = timerOrDuration;
+                config.timerProgressBar = true;
+            }
+            // If timerOrDuration is false, no timer is set.
+            Swal.fire(config);
         }
 
+
         function showSuccessSweetAlert(checkinTime, teacherName, photoUrl) {
-            // Show check-in photo in success message only if available
              let imageHtml = '';
-             if (photoUrl && photoUrl !== CHECKIN_PHOTO_PLACEHOLDER) {
+             if (photoUrl && photoUrl !== CHECKIN_PHOTO_PLACEHOLDER) { // CHECKIN_PHOTO_PLACEHOLDER might not be relevant here if photoDataUrl is used
                  imageHtml = `<img src="${photoUrl}" alt="Check-in Photo" style="max-width:150px; max-height:150px; margin-top:10px; border-radius:5px; border: 1px solid #ddd;">`;
              }
             Swal.fire({
@@ -663,24 +721,16 @@
                        <p class="mb-2"><strong>ผู้บันทึก:</strong> ${teacherName}</p>
                        ${imageHtml}`,
                 confirmButtonText: 'ปิด',
-                timer: 3500, // Slightly longer timer
+                timer: 3500,
                 timerProgressBar: true
             });
         }
 
-        /**
-         * Formats an ISO 8601 timestamp string or Date object into Thai format:
-         * Example: 30/พ.ค./2568, 11:28:00 น.
-         * @param {string|Date} dateInput - The ISO string or Date object.
-         * @returns {string} Formatted Thai date and time string, or 'Invalid Date'
-         */
         function formatThaiDateTimeCustom(dateInput) {
             try {
-                const date = moment(dateInput); // Use moment for reliable parsing
+                const date = moment(dateInput);
                 if (!date.isValid()) { return 'Invalid Date'; }
-                // Ensure correct year (+543) and Thai formatting
                 const thaiYear = date.year() + 543;
-                 // Format: DD/MMM/YYYY, HH:mm:ss น. (Uses 'th' locale for MMM)
                  return date.format('DD/MMM/') + thaiYear + date.format(', HH:mm:ss น.');
              } catch (error) {
                 console.error("Error formatting custom date:", dateInput, error);
@@ -688,12 +738,6 @@
             }
         }
 
-         /**
-          * Formats only the date part into Thai format.
-          * Example: พฤหัสบดี 30 พฤษภาคม 2568
-          * @param {string|Date} dateInput - The ISO string or Date object.
-          * @returns {string} Formatted Thai date string, or 'Invalid Date'
-          */
          function formatThaiDate(dateInput) {
              try {
                  const date = moment(dateInput);
@@ -717,13 +761,11 @@
         }
 
         function switchPage(targetPageId) {
-            showLoading(true); // Show loading indicator during page switch
+            showLoading(true);
 
-            // Deactivate all sections and buttons
             pageSections.forEach(section => section.classList.remove('active'));
             mainNavButtons.forEach(btn => btn.classList.remove('active'));
 
-            // Activate the target section and button
             const targetSection = document.getElementById(targetPageId);
             const targetButton = document.querySelector(`.main-nav .btn[data-target="${targetPageId}"]`);
 
@@ -731,36 +773,25 @@
                 targetSection.classList.add('active');
                 console.log(`Switched to page: ${targetPageId}`);
 
-                // Load data or perform actions specific to the page
                 if (targetPageId === 'homePage') {
-                     loadHomepageStats(); // Load stats when home is shown
+                     loadHomepageStats();
                 } else if (targetPageId === 'dashboardPage') {
-                    loadDashboardData(); // Load data when dashboard is shown
+                    loadDashboardData();
                 } else if (targetPageId === 'checkinPage') {
-                     resizeCanvas(); // Ensure signature pad resizes correctly when shown
-                     // Optional: reset check-in form state if needed
-                } else if (targetPageId === 'searchPage') {
-                    // Optional: clear search results or reset fields when switching to search page
-                    // searchTeacherIdInput.value = '';
-                    // searchResultArea.style.display = 'none';
-                    // searchMessage.textContent = '';
-                    // if(statsDataTable) statsDataTable.clear().draw();
+                     resizeCanvas();
                 }
             }
 
             if (targetButton) {
                 targetButton.classList.add('active');
             }
-
-            // Hide loading indicator after a short delay to allow rendering
-            setTimeout(() => showLoading(false), 100); // Slightly longer delay
+            setTimeout(() => showLoading(false), 100);
         }
 
         // --- Homepage Stats Function ---
         async function loadHomepageStats() {
-             if (!homePage.classList.contains('active') || SCRIPT_URL.includes('YOUR_SCRIPT_URL')) return;
+             if (!homePage.classList.contains('active') || SCRIPT_URL.includes('YOUR_APPS_SCRIPT_WEB_APP_URL_HERE')) return;
 
-             // Indicate loading on cards
              homeLoggedTodayEl.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
              homeGateDutyTodayEl.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
              homeBuildingDutyTodayEl.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
@@ -772,7 +803,6 @@
                  const response = await fetch(url);
                  if (!response.ok) throw new Error(`Server error (${response.status})`);
                  const data = await response.json();
-                 console.log("Homepage Stats Received:", data);
 
                  if (data.status === 'success' && data.counts) {
                      homeLoggedTodayEl.textContent = data.counts.loggedToday || 0;
@@ -791,88 +821,67 @@
 
 
         // --- Dashboard Functions ---
-
         function initializeDashboard() {
-             // Initialize Date Range Picker
              $(dashboardDateFilterEl).daterangepicker({
-                 singleDatePicker: true, showDropdowns: true, autoApply: true, // Apply date immediately on selection
+                 singleDatePicker: true, showDropdowns: true, autoApply: true,
                  locale: {
-                     format: 'YYYY-MM-DD', // Value format
-                     applyLabel: 'เลือก', cancelLabel: 'ยกเลิก',
+                     format: 'YYYY-MM-DD', applyLabel: 'เลือก', cancelLabel: 'ยกเลิก',
                      daysOfWeek: moment.weekdaysMin(), monthNames: moment.monthsShort(),
                      firstDay: moment.localeData('th').firstDayOfWeek()
                  },
-                 maxDate: moment() // Limit selection up to today
+                 maxDate: moment()
              }, function(start, end, label) {
-                 console.log("Dashboard Date selected: ", start.format('YYYY-MM-DD'));
-                 loadDashboardData(); // Reload data when date changes
+                 loadDashboardData();
              });
-             // Set initial date to today
              $(dashboardDateFilterEl).data('daterangepicker').setStartDate(moment());
 
-            // Initialize DataTable
             dashboardDataTable = dashboardTableEl.DataTable({
                 language: { url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/th.json" },
                 columns: [
                     {
-                        data: 'teacherPhotoUrl', orderable: false, searchable: false, // คอลัมน์ 1: รูปครู
+                        data: 'teacherPhotoUrl', orderable: false, searchable: false,
                         render: function(data, type, row) {
-                            // Teacher Profile Photo with zoom/alert
                             const imgSrc = data || DEFAULT_PROFILE_IMG;
                             return `<img src="${imgSrc}" class="table-img dashboard-table-img" alt="รูปครู" onerror="this.onerror=null; this.src='${DEFAULT_PROFILE_IMG}';" data-img-src="${imgSrc}">`;
                         }
                     },
-                    { data: 'teacherName' }, // คอลัมน์ 2: ชื่อ สกุล
-                    { data: 'level', defaultContent: 'N/A' }, // คอลัมน์ 3: ระดับชั้น
-                    { data: 'dutyType' }, // คอลัมน์ 4: ปฏิบัติหน้าที่/สถานะ
+                    { data: 'teacherName' },
+                    { data: 'level', defaultContent: 'N/A' },
+                    { data: 'dutyType' },
                     {
-                        data: 'timestamp', // คอลัมน์ 5: เวลาบันทึก
-                        render: function(data) {
-                            return formatThaiDateTimeCustom(data); // Use the new custom format
-                        }
+                        data: 'timestamp',
+                        render: function(data) { return formatThaiDateTimeCustom(data); }
                     }
                 ],
-                order: [[4, 'desc']], // Default sort by timestamp descending (column index 4)
-                responsive: true,
-                pageLength: 10,
+                order: [[4, 'desc']], responsive: true, pageLength: 10,
                 lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "ทั้งหมด"] ],
                  dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' +
                       '<"row dt-row"<"col-sm-12"tr>>' +
                       '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
-                 drawCallback: function(settings) { // Add drawCallback for event listeners
-                     addDashboardImageEventListeners(); // Attach listeners after draw
-                 }
+                 drawCallback: function(settings) { addDashboardImageEventListeners(); }
             });
 
-            // Event listeners for filters
-            dashboardDutyFilterEl.addEventListener('change', filterDashboardTable); // Filter client-side
-            dashboardLevelFilterEl.addEventListener('change', filterDashboardTable); // New Level Filter
+            dashboardDutyFilterEl.addEventListener('change', filterDashboardTable);
+            dashboardLevelFilterEl.addEventListener('change', filterDashboardTable);
             refreshDashboardBtn.addEventListener('click', loadDashboardData);
-
-             // Initial data load handled by switchPage
         }
 
         async function loadDashboardData() {
-            if (!dashboardPage.classList.contains('active')) return; // Don't load if page not visible
-            if (SCRIPT_URL.includes('YOUR_SCRIPT_URL')) return;
-
+            if (!dashboardPage.classList.contains('active') || SCRIPT_URL.includes('YOUR_APPS_SCRIPT_WEB_APP_URL_HERE')) return;
             showLoading(true);
             const selectedDate = $(dashboardDateFilterEl).data('daterangepicker').startDate.format('YYYY-MM-DD');
-            dashboardTableDateEl.textContent = `ข้อมูล ณ วันที่: ${formatThaiDate(selectedDate)}`; // Update date display
+            dashboardTableDateEl.textContent = `ข้อมูล ณ วันที่: ${formatThaiDate(selectedDate)}`;
 
             const url = `${SCRIPT_URL}?action=getDashboardData&date=${selectedDate}`;
-
             try {
                 const response = await fetch(url);
                 if (!response.ok) throw new Error(`Server error (${response.status}): ${response.statusText}`);
                  const data = await response.json();
-                 console.log("Dashboard Data Received:", data);
-
                  if (data.status === 'success') {
                      updateDashboardCards(data.counts);
-                     dashboardDataCache = data.recentLogs || []; // Store data
-                     populateLevelFilter(dashboardLevelFilterEl, dashboardDataCache); // Populate level filter based on data
-                     filterDashboardTable(); // Display and filter initial data
+                     dashboardDataCache = data.recentLogs || [];
+                     populateLevelFilter(dashboardLevelFilterEl, dashboardDataCache);
+                     filterDashboardTable();
                  } else {
                      throw new Error(data.message || 'Failed to load dashboard data');
                  }
@@ -880,7 +889,7 @@
                 console.error('Error loading dashboard data:', error);
                 showSweetAlert('error', 'เกิดข้อผิดพลาด', `ไม่สามารถโหลดข้อมูล Dashboard ได้: ${error.message}`, false);
                 if (dashboardDataTable) dashboardDataTable.clear().draw();
-                updateDashboardCards(null); // Clear cards
+                updateDashboardCards(null);
                  dashboardDataCache = [];
                  dashboardTableDateEl.textContent = 'ไม่สามารถโหลดข้อมูลได้';
             } finally {
@@ -904,135 +913,139 @@
              if (!selectElement || !data) return;
              const existingLevels = new Set();
              data.forEach(item => {
-                 if (item.level && item.level !== 'N/A') {
-                    existingLevels.add(item.level);
-                 }
+                 if (item.level && item.level !== 'N/A') existingLevels.add(item.level);
              });
-
-             // Clear existing options except the 'all' option
              $(selectElement).find('option:not([value="all"])').remove();
-
-             // Add options from the data
              existingLevels.forEach(level => {
-                 $(selectElement).append($('<option>', {
-                    value: level,
-                    text: level
-                 }));
+                 $(selectElement).append($('<option>', { value: level, text: level }));
              });
          }
 
          function filterDashboardTable() {
             if (!dashboardDataTable || dashboardDataCache === null) return;
-
             const selectedDuty = dashboardDutyFilterEl.value;
-            const selectedLevel = dashboardLevelFilterEl.value; // Get selected level
+            const selectedLevel = dashboardLevelFilterEl.value;
             let filteredData = dashboardDataCache;
-
-            // Filter by Level
             if (selectedLevel !== 'all') {
                  filteredData = filteredData.filter(log => log.level === selectedLevel);
             }
-
-            // Filter by Duty/Status
             if (selectedDuty !== 'all') {
                  filteredData = filteredData.filter(log => log.dutyType === selectedDuty);
             }
-
-            console.log(`Filtering dashboard. Level: ${selectedLevel}, Duty: ${selectedDuty}. Displaying ${filteredData.length} of ${dashboardDataCache.length} logs.`);
-
-            dashboardDataTable.clear();
-            dashboardDataTable.rows.add(filteredData);
-            dashboardDataTable.draw();
+            dashboardDataTable.clear().rows.add(filteredData).draw();
          }
 
-         // Function to handle image clicks in Dashboard Table
         function addDashboardImageEventListeners() {
              $('#dashboardTable tbody').off('click', 'img.dashboard-table-img').on('click', 'img.dashboard-table-img', function() {
                 const src = $(this).data('img-src');
                  if (src && src !== DEFAULT_PROFILE_IMG) {
-                    Swal.fire({
-                        imageUrl: src, imageHeight: 400, imageAlt: 'รูปครู',
-                        showConfirmButton: true, confirmButtonText: 'ปิด'
-                    });
-                 } else {
-                    // Optional: show message if placeholder clicked
-                    // showSweetAlert('info', 'ไม่มีรูปภาพ', 'ไม่มีรูปภาพโปรไฟล์สำหรับครูท่านนี้');
+                    Swal.fire({ imageUrl: src, imageHeight: 400, imageAlt: 'รูปครู', confirmButtonText: 'ปิด' });
                  }
             });
         }
 
 
         // --- Check-in Form Functions ---
-
-       function initializeCheckinFormLogic() {
-             // Teacher ID Input Listener
+        function initializeCheckinFormLogic() {
              if (teacherIdInput) {
                  teacherIdInput.addEventListener('input', handleTeacherIdInput);
                  teacherIdInput.addEventListener('paste', (e) => { setTimeout(handleTeacherIdInput, 0); });
-             } else { console.error("Checkin Element Missing: teacherIdInput"); }
-
-             // Duty Status Change Listener (Event Delegation on Parent Section)
-             if (dutyStatusSection) {
-                  dutyStatusSection.addEventListener('change', handleDutyStatusChange);
-             } else { console.error("Checkin Element Missing: dutyStatusSection"); }
-
-             // Button Listeners
-             if(getLocationBtn) getLocationBtn.addEventListener('click', initializeGeolocation); else console.warn("Checkin Element Missing: getLocationBtn");
-             if(startCameraBtn) startCameraBtn.addEventListener('click', startCamera); else console.warn("Checkin Element Missing: startCameraBtn");
-             if(capturePhotoBtn) capturePhotoBtn.addEventListener('click', capturePhoto); else console.warn("Checkin Element Missing: capturePhotoBtn");
-             if(resetPhotoBtn) resetPhotoBtn.addEventListener('click', resetPhoto); else console.warn("Checkin Element Missing: resetPhotoBtn");
-
-             // Form Submit Listener
-             if (checkinForm) {
-                 checkinForm.addEventListener('submit', handleCheckinFormSubmit);
-             } else { console.error("Checkin Element Missing: checkinForm"); }
-
+             }
+             if (dutyStatusSection) dutyStatusSection.addEventListener('change', handleDutyStatusChange);
+             if(getLocationBtn) getLocationBtn.addEventListener('click', initializeGeolocation);
+             if(startCameraBtn) startCameraBtn.addEventListener('click', startCamera);
+             if(capturePhotoBtn) capturePhotoBtn.addEventListener('click', capturePhoto);
+             if(resetPhotoBtn) resetPhotoBtn.addEventListener('click', resetPhoto);
+             if (checkinForm) checkinForm.addEventListener('submit', handleCheckinFormSubmit);
             addCompletionCheckListeners();
-            hideAllCheckinSections(); // Ensure clean state on load
+            hideAllCheckinSections();
         }
 
-        function initializeClock() {
-            // Update clocks immediately on load, interval handles subsequent updates
-             updateClockAndButtonState();
-        }
-
+        // Function to check if current time is within a given window
         function isWithinWindow(currentTimeStr, startTimeStr, endTimeStr) {
-            // Handles time comparison correctly even across midnight if needed (though unlikely here)
             return currentTimeStr >= startTimeStr && currentTimeStr <= endTimeStr;
         }
 
-        function updateClockAndButtonState() {
-            // Update Clock Display (only if relevant page is active)
-            const now = new Date();
-             const year = now.getFullYear() + 543;
-             const optsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-             const optsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-             const thaiDate = now.toLocaleDateString('th-TH', optsDate).replace(String(now.getFullYear()), String(year));
-             const thaiTime = now.toLocaleTimeString('th-TH', optsTime);
-             const clockText = `<i class="fas fa-clock me-2"></i> ${thaiDate} เวลา ${thaiTime} น.`;
-
-             if(homePage.classList.contains('active') && clockElementHome) clockElementHome.innerHTML = clockText;
-             if(checkinPage.classList.contains('active') && clockElementCheckin) clockElementCheckin.innerHTML = clockText;
-
-
-            if (isSubmitting || !checkinPage.classList.contains('active')) {
-                 // Don't update check-in button state if submitting or check-in page not active
-                 return;
-             }
-
-            // Check Check-in Time Window
-            const currentTimeStr = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }); // Use HH:mm format
-            checkinAllowed = false; currentCheckinWindow = null;
-            if (isWithinWindow(currentTimeStr, MORNING_START_TIME, MORNING_END_TIME)) { checkinAllowed = true; currentCheckinWindow = 'morning'; }
-            else if (isWithinWindow(currentTimeStr, AFTERNOON_START_TIME, AFTERNOON_END_TIME)) { checkinAllowed = true; currentCheckinWindow = 'afternoon'; }
-
-            // Update Submit button text and state (only if check-in page active)
-            updateSubmitButtonDisplay();
+        // Helper function to get selected duty type value
+        function getSelectedDutyType() {
+            const selectedDutyRadio = document.querySelector('input[name="dutyType"]:checked');
+            return selectedDutyRadio ? selectedDutyRadio.value : null;
         }
 
+        // New helper function for specific duty time validation
+        function isCheckinAllowedForSelectedDuty() {
+            const now = new Date();
+            const currentTimeStr = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+            const selectedDuty = getSelectedDutyType();
+            let currentGeneralWindow = null;
+
+            const currentStatus = document.querySelector('input[name="dutyStatus"]:checked')?.value;
+            if (currentStatus === 'ลา' || currentStatus === 'ไปราชการ') {
+                return { allowed: true, windowText: '', generalWindow: null }; // Always allowed for these statuses
+            }
+
+            if (currentStatus === 'มา' && !selectedDuty) {
+                 return { allowed: false, windowText: 'กรุณาเลือกการปฏิบัติหน้าที่', generalWindow: null };
+            }
+
+            switch (selectedDuty) {
+                case 'เวรยืนประตู':
+                    if (isWithinWindow(currentTimeStr, GATE_DUTY_MORNING_START, GATE_DUTY_MORNING_END)) {
+                        currentGeneralWindow = 'morning';
+                        return { allowed: true, windowText: `เวรยืนประตู (เช้า ${GATE_DUTY_MORNING_START}-${GATE_DUTY_MORNING_END})`, generalWindow: currentGeneralWindow };
+                    }
+                    if (isWithinWindow(currentTimeStr, GATE_DUTY_AFTERNOON_START, GATE_DUTY_AFTERNOON_END)) {
+                        currentGeneralWindow = 'afternoon';
+                        return { allowed: true, windowText: `เวรยืนประตู (บ่าย ${GATE_DUTY_AFTERNOON_START}-${GATE_DUTY_AFTERNOON_END})`, generalWindow: currentGeneralWindow };
+                    }
+                    return { allowed: false, windowText: `นอกเวลา เวรยืนประตู (เช้า ${GATE_DUTY_MORNING_START}-${GATE_DUTY_MORNING_END} หรือ บ่าย ${GATE_DUTY_AFTERNOON_START}-${GATE_DUTY_AFTERNOON_END})`, generalWindow: null };
+                case 'ตรวจอาคาร':
+                    if (isWithinWindow(currentTimeStr, BUILDING_CHECK_MORNING_START, BUILDING_CHECK_MORNING_END)) {
+                        currentGeneralWindow = 'morning';
+                        return { allowed: true, windowText: `ตรวจอาคาร (เช้า ${BUILDING_CHECK_MORNING_START}-${BUILDING_CHECK_MORNING_END})`, generalWindow: currentGeneralWindow };
+                    }
+                    if (isWithinWindow(currentTimeStr, BUILDING_CHECK_AFTERNOON_START, BUILDING_CHECK_AFTERNOON_END)) {
+                        currentGeneralWindow = 'afternoon';
+                        return { allowed: true, windowText: `ตรวจอาคาร (บ่าย ${BUILDING_CHECK_AFTERNOON_START}-${BUILDING_CHECK_AFTERNOON_END})`, generalWindow: currentGeneralWindow };
+                    }
+                    return { allowed: false, windowText: `นอกเวลา ตรวจอาคาร (เช้า ${BUILDING_CHECK_MORNING_START}-${BUILDING_CHECK_MORNING_END} หรือ บ่าย ${BUILDING_CHECK_AFTERNOON_START}-${BUILDING_CHECK_AFTERNOON_END})`, generalWindow: null };
+                case 'ระดับ':
+                    if (isWithinWindow(currentTimeStr, LEVEL_DUTY_MORNING_START, LEVEL_DUTY_MORNING_END)) {
+                        currentGeneralWindow = 'morning';
+                        return { allowed: true, windowText: `ระดับ (เช้า ${LEVEL_DUTY_MORNING_START}-${LEVEL_DUTY_MORNING_END})`, generalWindow: currentGeneralWindow };
+                    }
+                    return { allowed: false, windowText: `นอกเวลา ระดับ (เช้า ${LEVEL_DUTY_MORNING_START}-${LEVEL_DUTY_MORNING_END})`, generalWindow: null };
+                case 'กรรมการประจำจุด':
+                    if (isWithinWindow(currentTimeStr, POINT_COMMITTEE_DUTY_MORNING_START, POINT_COMMITTEE_DUTY_MORNING_END)) {
+                        currentGeneralWindow = 'morning';
+                        return { allowed: true, windowText: `กรรมการประจำจุด (เช้า ${POINT_COMMITTEE_DUTY_MORNING_START}-${POINT_COMMITTEE_DUTY_MORNING_END})`, generalWindow: currentGeneralWindow };
+                    }
+                    return { allowed: false, windowText: `นอกเวลา กรรมการประจำจุด (เช้า ${POINT_COMMITTEE_DUTY_MORNING_START}-${POINT_COMMITTEE_DUTY_MORNING_END})`, generalWindow: null };
+                default:
+                    return { allowed: false, windowText: 'กรุณาเลือกการปฏิบัติหน้าที่ให้ถูกต้อง', generalWindow: null };
+            }
+        }
+
+        function updateClockAndButtonState() {
+            const now = new Date();
+            const year = now.getFullYear() + 543;
+            const optsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const optsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            const thaiDate = now.toLocaleDateString('th-TH', optsDate).replace(String(now.getFullYear()), String(year));
+            const thaiTime = now.toLocaleTimeString('th-TH', optsTime);
+            const clockText = `<i class="fas fa-clock me-2"></i> ${thaiDate} เวลา ${thaiTime} น.`;
+
+            if(homePage.classList.contains('active') && clockElementHome) clockElementHome.innerHTML = clockText;
+            // MyClockDisplay is updated by showTime() function from original script
+
+            if (isSubmitting || !checkinPage.classList.contains('active')) return;
+            updateSubmitButtonDisplay(); // This will now use isCheckinAllowedForSelectedDuty
+        }
+
+
         function handleTeacherIdInput() {
-             const currentVal = teacherIdInput.value.replace(/\D/g,''); // Remove non-digits
-             teacherIdInput.value = currentVal; // Update input field
+             const currentVal = teacherIdInput.value.replace(/\D/g,'');
+             teacherIdInput.value = currentVal;
              teacherLookupStatus.textContent = '';
              teacherLookupStatus.classList.remove('text-danger', 'text-success');
 
@@ -1040,9 +1053,9 @@
                  showLoadingAndFetchTeacher(currentVal);
              } else if (currentVal.length > 0) {
                   teacherLookupStatus.textContent = 'กรุณากรอกรหัส 4 ตัว';
-                  hideAllCheckinSections(false); // Hide below teacher info
+                  hideAllCheckinSections(false);
              } else {
-                  hideAllCheckinSections(true); // Hide everything
+                  hideAllCheckinSections(true);
              }
         }
 
@@ -1053,121 +1066,85 @@
                 allowOutsideClick: false, allowEscapeKey: false,
                 didOpen: () => { Swal.showLoading(); }
             });
-             hideAllCheckinSections(false); // Keep ID, hide below
+            hideAllCheckinSections(false);
             fetchTeacherData(teacherId);
         }
 
         async function fetchTeacherData(teacherId) {
-            if (!teacherId || SCRIPT_URL.includes('YOUR_SCRIPT_URL')) {
-                // Swal.close(); // Already handled by finally block below
-                if (SCRIPT_URL.includes('YOUR_SCRIPT_URL')) {
+            if (!teacherId || SCRIPT_URL.includes('YOUR_APPS_SCRIPT_WEB_APP_URL_HERE')) {
+                if (SCRIPT_URL.includes('YOUR_APPS_SCRIPT_WEB_APP_URL_HERE')) {
                      showSweetAlert('error', 'Config Error', 'SCRIPT_URL not set', false);
                 }
                 return;
             }
-            teacherDataCache = null; // Reset cache
+            teacherDataCache = null;
 
-            // Show loading SweetAlert (moved from showLoadingAndFetchTeacher)
-            Swal.fire({
-                title: 'กำลังค้นหาข้อมูลครู...', text: `รหัส: ${teacherId}`,
-                allowOutsideClick: false, allowEscapeKey: false,
-                didOpen: () => { Swal.showLoading(); }
-            });
+            // This SweetAlert is already called by showLoadingAndFetchTeacher
+            // Swal.fire({
+            //     title: 'กำลังค้นหาข้อมูลครู...', text: `รหัส: ${teacherId}`,
+            //     allowOutsideClick: false, allowEscapeKey: false,
+            //     didOpen: () => { Swal.showLoading(); }
+            // });
 
             try {
-                // showLoading(true); // Loading is handled by Swal now
                 const lookupUrl = `${SCRIPT_URL}?action=getTeacherInfo&id=${encodeURIComponent(teacherId)}`;
                 const response = await fetch(lookupUrl);
-
                 if (!response.ok) throw new Error(`Server Connection Error (${response.status})`);
-                const data = await response.json(); // Assume server sends JSON
-                 console.log("Teacher Info Received:", data);
+                const data = await response.json();
 
                 if (data.error) throw new Error(data.error);
-                 // *** Check for 'not found' FIRST ***
                  if (!data.found || !data.teacher) {
-                     // Throw an error to be caught by the catch block, which shows the error SweetAlert
                      throw new Error(data.message || 'ไม่พบข้อมูลครู กรุณาตรวจสอบรหัส หรือติดต่อ <a style="color:#0515f5;cursor:pointer" target="_blank" href="https://line.me/ti/p/3F7VGrqgUr">อ.ธนสาร สีรักษ์</a>');
                  }
 
-                // *** Success Path - Close loading Swal and show Success Swal ***
-                if (Swal.isLoading()) { Swal.close(); } // Close loading alert first
+                if (Swal.isLoading()) Swal.close();
                  Swal.fire({
-                    icon: 'success',
-                    title: 'พบข้อมูล',
+                    icon: 'success', title: 'พบข้อมูล',
                     html: `<strong>ชื่อ-สกุล:</strong> ${data.teacher.name || 'N/A'}`,
-                    timer: 2000, // Shorter timer for success
-                    timerProgressBar: true,
-                    showConfirmButton: false // No need for confirm button
+                    timer: 2000, timerProgressBar: true, showConfirmButton: false
                 });
 
-                // Populate UI (as before)
                 teacherDataCache = data.teacher;
                 teacherNameSpan.textContent = data.teacher.name || 'N/A';
                 teacherDepartmentSpan.textContent = data.teacher.department || 'N/A';
                 teacherPositionSpan.textContent = data.teacher.position || 'N/A';
-                teacherPhoto.src = data.teacher.photoUrl || PLACEHOLDER_IMG; // Profile photo
+                teacherPhoto.src = data.teacher.photoUrl || PLACEHOLDER_IMG;
                 teacherPhoto.onerror = () => { teacherPhoto.src = PLACEHOLDER_IMG; };
                 hiddenTeacherName.value = data.teacher.name || '';
                 hiddenTeacherDepartment.value = data.teacher.department || '';
-
                 teacherLookupStatus.textContent = `พบข้อมูล: ${data.teacher.name || 'N/A'}`;
                 teacherLookupStatus.classList.remove('text-danger');
-                 teacherLookupStatus.classList.add('text-success');
-                showBaseInfoAndDutyStatus(); // Show next section
+                teacherLookupStatus.classList.add('text-success');
+                showBaseInfoAndDutyStatus();
 
             } catch (error) {
-                 // *** Error Path (Includes 'Not Found' from the throw above) ***
-                 console.error('Fetch Teacher Error:', error);
-                 if (Swal.isLoading()) { Swal.close(); } // Close loading alert if still open
-
-                 teacherLookupStatus.textContent = `ข้อผิดพลาด: ${error.message}`; // Show error near input
+                 if (Swal.isLoading()) Swal.close();
+                 teacherLookupStatus.textContent = `ข้อผิดพลาด: ${error.message.substring(0, 100)}`; // Prevent overly long messages
                  teacherLookupStatus.classList.add('text-danger');
                  teacherLookupStatus.classList.remove('text-success');
-                 hideAllCheckinSections(false); // Hide sections below ID
+                 hideAllCheckinSections(false);
                  teacherIdInput.focus();
                  teacherDataCache = null;
-
-                 // Show error SweetAlert (this now handles 'not found' as well)
                  showSweetAlert('error', 'เกิดข้อผิดพลาด / ไม่พบข้อมูล', `รายละเอียด: ${error.message}`, false);
-
              } finally {
-                 // showLoading(false); // Loading handled by Swal
-                 // Ensure Swal is closed if something unexpected happened
-                 if (Swal.isLoading()) { Swal.close(); }
+                 if (Swal.isLoading()) Swal.close();
              }
-        }
-
-        // You might need to REMOVE the Swal call from showLoadingAndFetchTeacher
-        // as it's now handled within fetchTeacherData itself.
-        function showLoadingAndFetchTeacher(teacherId) {
-            teacherLookupStatus.textContent = '';
-            /* REMOVED Swal.fire CALL FROM HERE
-            Swal.fire({
-                title: 'กำลังค้นหาข้อมูลครู...', text: `รหัส: ${teacherId}`,
-                allowOutsideClick: false, allowEscapeKey: false,
-                didOpen: () => { Swal.showLoading(); }
-            });
-            */
-            hideAllCheckinSections(false); // Keep ID, hide below
-            fetchTeacherData(teacherId); // Call the modified fetchTeacherData
         }
 
         function showBaseInfoAndDutyStatus() {
              teacherInfoDiv.style.display = 'block';
              dutyStatusSection.style.display = 'block';
              dutyStatusRadios.forEach(radio => radio.checked = false);
-             hideDutySubSections(); // Hide sections below duty status initially
+             hideDutySubSections();
              checkFormCompletion();
         }
 
         function hideAllCheckinSections(clearTeacherId = true) {
-            // console.log(`Hiding checkin sections, clearTeacherId=${clearTeacherId}`);
             teacherInfoDiv.style.display = 'none';
             dutyStatusSection.style.display = 'none';
-             hideDutySubSections(); // Hides type, remarks, location, sig, photo, submit
+            hideDutySubSections();
 
-            if (teacherDataCache) { teacherDataCache = null; }
+            if (teacherDataCache) teacherDataCache = null;
             hiddenTeacherName.value = ''; hiddenTeacherDepartment.value = '';
             locationAcquired = false;
 
@@ -1179,22 +1156,20 @@
 
              clearValidationErrors();
              statusMessage.innerHTML = '';
-             stopCameraStream(); // Stop camera if running
+             stopCameraStream();
              if (signaturePad) signaturePad.clear();
              signatureDataInput.value = '';
-             photoDataInput.value = ''; // Clear hidden base64 photo data
+             photoDataInput.value = '';
              capturedPhotoPreview.src = PHOTO_PREVIEW_PLACEHOLDER;
              startCameraBtn.innerHTML = '<i class="fas fa-video me-1"></i> เปิดกล้อง';
-             startCameraBtn.disabled = false; // Re-enable start camera button
+             startCameraBtn.disabled = false;
              capturePhotoBtn.disabled = true;
              resetPhotoBtn.disabled = true;
              cameraErrorDiv.textContent = ''; photoErrorDiv.textContent = '';
              latitudeInput.value = ''; longitudeInput.value = '';
-             locationInfoDiv.querySelector('span').textContent = ''; // Clear location text
-             locationErrorDiv.textContent = '';
+             locationInfoDiv.querySelector('span').textContent = '';
              const mapLink = locationInfoDiv.querySelector('a.map-link'); if(mapLink) mapLink.remove();
-
-             checkFormCompletion(); // Update submit button state (should be hidden/disabled)
+             checkFormCompletion();
         }
 
          function hideDutySubSections() {
@@ -1204,69 +1179,137 @@
             signatureSection.style.display = 'none';
             photoSection.style.display = 'none';
             submitButtonSection.style.display = 'none';
-            // Reset dependent fields when hiding sections
             dutyTypeRadios.forEach(r => r.checked = false);
             remarksInput.value = '';
         }
 
-        async function handleDutyStatusChange(event) {
-            // Check if the event target is one of the radio buttons we care about
-             if (!event.target || event.target.name !== 'dutyStatus') return;
+        // Inside your <script> tag in PCTeacherattendance v1.html
 
-            const selectedStatus = event.target.value;
-            console.log("Duty status changed to:", selectedStatus);
+async function handleDutyStatusChange(event) {
+    if (!event.target || event.target.name !== 'dutyStatus') return;
 
-            clearValidationErrors(['dutyStatusError']); // Clear only duty status error initially
-            dutySubSectionsLoading.style.display = 'flex'; // Show spinner
-            hideDutySubSections(); // Hide everything below first
+    const selectedStatus = event.target.value;
+    console.log("Duty status changed to:", selectedStatus);
 
-            // Reset fields that depend on status before showing new sections
-            dutyTypeRadios.forEach(r => { r.checked = false; r.required = false; });
-            remarksInput.value = ''; remarksInput.required = false;
-            locationAcquired = false; latitudeInput.value = ''; longitudeInput.value = ''; locationErrorDiv.textContent = '';
-            locationInfoDiv.querySelector('span').textContent = '';
-             const mapLinkOld = locationInfoDiv.querySelector('a.map-link'); if (mapLinkOld) mapLinkOld.remove();
-            if (signaturePad) signaturePad.clear(); signatureDataInput.value = ''; signatureErrorDiv.textContent = '';
-            photoDataInput.value = ''; photoErrorDiv.textContent = ''; capturedPhotoPreview.src = PHOTO_PREVIEW_PLACEHOLDER;
-            startCameraBtn.innerHTML = '<i class="fas fa-video me-1"></i> เปิดกล้อง'; capturePhotoBtn.disabled = true; resetPhotoBtn.disabled = true; cameraErrorDiv.textContent = '';
-            startCameraBtn.disabled = false; // Re-enable start camera button
-            stopCameraStream(); // Stop camera if running
-             // --- End Reset fields ---
+    clearValidationErrors(['dutyStatusError']);
+    dutySubSectionsLoading.style.display = 'flex';
+    hideDutySubSections(); // Hide everything below first
 
-            await new Promise(resolve => setTimeout(resolve, 50)); // Short delay for UI update
+    // Reset fields that depend on status before showing new sections
+    dutyTypeRadios.forEach(r => { r.checked = false; r.required = false; });
+    remarksInput.value = ''; remarksInput.required = false;
+    locationAcquired = false; latitudeInput.value = ''; longitudeInput.value = ''; locationErrorDiv.textContent = '';
+    locationInfoDiv.querySelector('span').textContent = '';
+    const mapLinkOld = locationInfoDiv.querySelector('a.map-link'); if (mapLinkOld) mapLinkOld.remove();
+    if (signaturePad) signaturePad.clear(); signatureDataInput.value = ''; signatureErrorDiv.textContent = '';
+    photoDataInput.value = ''; photoErrorDiv.textContent = ''; capturedPhotoPreview.src = PHOTO_PREVIEW_PLACEHOLDER;
+    startCameraBtn.innerHTML = '<i class="fas fa-video me-1"></i> เปิดกล้อง'; capturePhotoBtn.disabled = true; resetPhotoBtn.disabled = true; cameraErrorDiv.textContent = '';
+    startCameraBtn.disabled = false;
+    stopCameraStream();
 
-            if (selectedStatus === 'มา') {
-                dutyTypeSection.style.display = 'block';
-                locationSection.style.display = 'block';
-                signatureSection.style.display = 'block';
-                photoSection.style.display = 'block';
-                submitButtonSection.style.display = 'grid'; // Use grid for d-grid
-                dutyTypeRadios.forEach(r => r.required = true);
-                remarksInput.required = false;
-                initializeGeolocation(); // Start getting location
-                resizeCanvas(); // Ensure signature pad is sized correctly
-            } else if (selectedStatus === 'ลา' || selectedStatus === 'ไปราชการ') {
-                remarksSection.style.display = 'block';
-                submitButtonSection.style.display = 'grid'; // Use grid for d-grid
-                remarksInput.required = true;
-                dutyTypeRadios.forEach(r => r.required = false);
-            } else {
-                 // Should not happen if a radio is selected, but hide submit just in case
-                 submitButtonSection.style.display = 'none';
-            }
+    await new Promise(resolve => setTimeout(resolve, 50)); // Short delay for UI update
 
-            dutySubSectionsLoading.style.display = 'none'; // Hide spinner
-            checkFormCompletion(); // Update submit button state after showing/hiding sections
+    if (selectedStatus === 'มา') {
+        // NEW: Proactive Time Check when 'มา' is selected
+        const now = new Date();
+        const currentTimeStr = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        let isCurrentlyInAnyAllowedWindow = false;
+        let specificDutyWindowMessage = "ไม่สามารถลงเวลาได้!!"; // Default message
+
+        // Check against all "มา" duty windows
+        if (isWithinWindow(currentTimeStr, GATE_DUTY_MORNING_START, GATE_DUTY_MORNING_END) ||
+            isWithinWindow(currentTimeStr, GATE_DUTY_AFTERNOON_START, GATE_DUTY_AFTERNOON_END) ||
+            isWithinWindow(currentTimeStr, BUILDING_CHECK_MORNING_START, BUILDING_CHECK_MORNING_END) ||
+            isWithinWindow(currentTimeStr, BUILDING_CHECK_AFTERNOON_START, BUILDING_CHECK_AFTERNOON_END) ||
+            isWithinWindow(currentTimeStr, LEVEL_DUTY_MORNING_START, LEVEL_DUTY_MORNING_END) ||
+            isWithinWindow(currentTimeStr, POINT_COMMITTEE_DUTY_MORNING_START, POINT_COMMITTEE_DUTY_MORNING_END)) {
+            isCurrentlyInAnyAllowedWindow = true;
         }
 
-        // Geolocation Functions
+        if (!isCurrentlyInAnyAllowedWindow) {
+            // Construct a more detailed message if needed, or use a general one
+            //let detailedMessage = "เนื่องจากท่านลงเวลาเกินที่กำหนด<br><br><u>ช่วงเวลาที่กำหนด:</u><br>";
+            //detailedMessage += `- เวรยืนประตู: <span class="math-inline">\{GATE\_DUTY\_MORNING\_START\}\-</span>{GATE_DUTY_MORNING_END} หรือ <span class="math-inline">\{GATE\_DUTY\_AFTERNOON\_START\}\-</span>{GATE_DUTY_AFTERNOON_END}<br>`;
+            //detailedMessage += `- ตรวจอาคาร: <span class="math-inline">\{BUILDING\_CHECK\_MORNING\_START\}\-</span>{BUILDING_CHECK_MORNING_END} หรือ <span class="math-inline">\{BUILDING\_CHECK\_AFTERNOON\_START\}\-</span>{BUILDING_CHECK_AFTERNOON_END}<br>`;
+            //detailedMessage += `- ระดับ: <span class="math-inline">\{LEVEL\_DUTY\_MORNING\_START\}\-</span>{LEVEL_DUTY_MORNING_END}<br>`;
+            //detailedMessage += `- กรรมการประจำจุด: <span class="math-inline">\{POINT\_COMMITTEE\_DUTY\_MORNING\_START\}\-</span>{POINT_COMMITTEE_DUTY_MORNING_END}`;
+
+            //showSweetAlert('warning', 'ขออภัย ไม่สามารถลงเวลาได้', detailedMessage, false); // false for no auto-timer
+            // Optionally, you might want to uncheck the 'มา' radio button or guide the user.
+            // For now, it just shows the alert. The form sections for 'มา' will still show.
+			//Swal.fire({
+				  //title: "ไม่สามารถลงเวลาได้ !!",
+				  //text: "เนื่องจากเลยช่วงเวลาที่กำหนด !",
+				  //icon: "error",
+				  //showCancelButton: false,
+				 // confirmButtonColor: "#3085d6",
+				 // cancelButtonColor: "#d33",
+				 // confirmButtonText: "ตกลง, ฉันเข้าใจ!",
+				  // position: 'top',
+				  //allowOutsideClick : false
+				//}).then((result) => {
+				  //if (result.isConfirmed) {
+					///switchPage('homePage');
+				 // }
+				//});
+				
+				Swal.fire({
+				  title: "ไม่สามารถลงเวลาได้ !!",
+				  text: "เนื่องจากเลยช่วงเวลาที่กำหนด !",
+				  icon: "error",
+				  showDenyButton: true,
+				  showCancelButton: false,
+				  confirmButtonText: "ตกลง, ฉันเข้าใจ!",
+				  denyButtonText: `ไปหน้าเช็คชื่อนักเรียน`
+				 
+				}).then((result) => {
+				  /* Read more about isConfirmed, isDenied below */
+				  if (result.isConfirmed) {
+					switchPage('homePage');
+				  } else if (result.isDenied) {
+				   window.location.href = `https://liff.line.me/1657056127-3k2w6bg7`
+				   //window.open("https://liff.line.me/1657056127-3k2w6bg7");
+					
+				  }
+				});
+				
+				
+				
+			}
+
+		
+        // END NEW: Proactive Time Check
+
+        dutyTypeSection.style.display = 'block';
+        locationSection.style.display = 'block';
+        signatureSection.style.display = 'block';
+        photoSection.style.display = 'block';
+        submitButtonSection.style.display = 'grid'; // Use grid for d-grid
+        dutyTypeRadios.forEach(r => r.required = true);
+        remarksInput.required = false;
+        initializeGeolocation(); // Start getting location
+        resizeCanvas(); // Ensure signature pad is sized correctly
+    } else if (selectedStatus === 'ลา' || selectedStatus === 'ไปราชการ') {
+        remarksSection.style.display = 'block';
+        submitButtonSection.style.display = 'grid'; // Use grid for d-grid
+        remarksInput.required = true;
+        dutyTypeRadios.forEach(r => r.required = false);
+    } else {
+        // Should not happen if a radio is selected, but hide submit just in case
+        submitButtonSection.style.display = 'none';
+    }
+
+    dutySubSectionsLoading.style.display = 'none'; // Hide spinner
+    checkFormCompletion(); // Update submit button state after showing/hiding sections
+}
+
          function initializeGeolocation() {
              if (!locationSection || locationSection.style.display === 'none') return;
              locationInfoDiv.querySelector('span').innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span> กำลังค้นหา...';
              locationErrorDiv.textContent = ''; latitudeInput.value = ''; longitudeInput.value = '';
              locationAcquired = false;
              clearValidationErrors(['locationError']);
-             checkFormCompletion(); // Update button state
+             checkFormCompletion();
 
              if ('geolocation' in navigator) {
                  if (locationWatcher) navigator.geolocation.clearWatch(locationWatcher);
@@ -1276,8 +1319,7 @@
                          longitudeInput.value = pos.coords.longitude.toFixed(8);
                          locationAcquired = true;
                          locationInfoDiv.querySelector('span').innerHTML = `<i class="fas fa-check-circle text-success me-1"></i> ${pos.coords.latitude.toFixed(5)}, ${pos.coords.longitude.toFixed(5)}`;
-                          // Add/Update map link
-                          const mapLinkUrl = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
+                          const mapLinkUrl = `https://maps.google.com/?q=${pos.coords.latitude},${pos.coords.longitude}`;
                           let link = locationInfoDiv.querySelector('a.map-link');
                           if (!link) {
                               link = document.createElement('a');
@@ -1285,22 +1327,19 @@
                               link.classList.add('ms-1', 'small', 'map-link', 'text-decoration-none');
                               link.innerHTML = '<i class="fas fa-external-link-alt"></i>';
                               link.title = 'เปิดในแผนที่';
-                              locationInfoDiv.appendChild(link); // Append after span
+                              locationInfoDiv.appendChild(link);
                           }
                           link.href = mapLinkUrl;
-                         checkFormCompletion(); // Re-check completion after getting location
+                         checkFormCompletion();
                      },
                      (err) => {
-                         handleLocationError(err);
-                         locationAcquired = false;
-                         checkFormCompletion();
+                         handleLocationError(err); locationAcquired = false; checkFormCompletion();
                      },
                      { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
                  );
              } else {
                  handleLocationError({ code: -1, message: 'Geolocation ไม่รองรับในเบราว์เซอร์นี้' });
-                 locationAcquired = false;
-                 checkFormCompletion();
+                 locationAcquired = false; checkFormCompletion();
              }
          }
 
@@ -1311,7 +1350,7 @@
                  case error.PERMISSION_DENIED: msg += 'ผู้ใช้ปฏิเสธการเข้าถึงตำแหน่ง'; break;
                  case error.POSITION_UNAVAILABLE: msg += 'ไม่สามารถระบุตำแหน่งได้'; break;
                  case error.TIMEOUT: msg += 'หมดเวลาในการค้นหาตำแหน่ง'; break;
-                 case -1: msg = error.message; break; // Custom message
+                 case -1: msg = error.message; break;
                  default: msg += 'ข้อผิดพลาดที่ไม่ทราบสาเหตุ'; break;
              }
              locationInfoDiv.querySelector('span').innerHTML = '<i class="fas fa-times-circle text-danger me-1"></i> ข้อผิดพลาดตำแหน่ง';
@@ -1320,47 +1359,36 @@
              const mapLink = locationInfoDiv.querySelector('a.map-link'); if(mapLink) mapLink.remove();
          }
 
-        // Signature Pad Functions
          function initializeSignaturePad() {
               setTimeout(() => {
                  if (!signatureCanvas) { console.error("Signature canvas element not found."); return; }
-                 resizeCanvas(); // Initial size calculation
+                 resizeCanvas();
                  signaturePad = new SignaturePad(signatureCanvas, { backgroundColor: 'rgb(255, 255, 255)', penColor: 'rgb(0, 0, 0)' });
-
                  if (resetSignatureBtn) {
                      resetSignatureBtn.addEventListener('click', () => {
                          if(signaturePad) signaturePad.clear();
                          signatureDataInput.value = '';
-                         clearValidationErrors(['signatureError']);
-                         checkFormCompletion();
+                         clearValidationErrors(['signatureError']); checkFormCompletion();
                      });
-                 } else { console.warn("Reset signature button not found."); }
-
-                 // Clear error message when user starts drawing
+                 }
                  signatureCanvas.addEventListener('pointerdown', () => {
-                      if(signaturePad && !signaturePad.isEmpty()) { clearValidationErrors(['signatureError']); }
+                      if(signaturePad && !signaturePad.isEmpty()) clearValidationErrors(['signatureError']);
                  });
-
-                 // Update hidden input when drawing stops
                  signaturePad.addEventListener("endStroke", () => {
                      if (signaturePad) {
-                         signatureDataInput.value = signaturePad.isEmpty() ? '' : signaturePad.toDataURL('image/jpeg', 0.8).split(',')[1]; // Store base64 only
-                         checkFormCompletion(); // Check if form is now complete
-                         if(!signaturePad.isEmpty()) clearValidationErrors(['signatureError']); // Clear error if signature exists
+                         signatureDataInput.value = signaturePad.isEmpty() ? '' : signaturePad.toDataURL('image/jpeg', 0.8).split(',')[1];
+                         checkFormCompletion();
+                         if(!signaturePad.isEmpty()) clearValidationErrors(['signatureError']);
                      }
                  });
-              }, 100); // Delay slightly to ensure layout is stable
+              }, 100);
          }
 
          function resizeCanvas() {
             if (!signatureCanvas || !signatureCanvas.offsetParent) return;
             const ratio = Math.max(window.devicePixelRatio || 1, 1);
             const container = signatureCanvas.parentElement;
-             // Check if container is valid and has dimensions
-             if (!container || container.offsetWidth === 0 || container.offsetHeight === 0) {
-                 // console.warn("Signature container not ready for resize.");
-                 return;
-             }
+             if (!container || container.offsetWidth === 0 || container.offsetHeight === 0) return;
             signatureCanvas.width = container.offsetWidth * ratio;
             signatureCanvas.height = container.offsetHeight * ratio;
             signatureCanvas.style.width = `${container.offsetWidth}px`;
@@ -1369,24 +1397,17 @@
              if (ctx) {
                 ctx.scale(ratio, ratio);
                  if (signaturePad) {
-                    // Redraw existing signature data after resize
-                    const data = signaturePad.toData(); // Backup data
-                    signaturePad.clear(); // Clear current canvas
-                    signaturePad.fromData(data); // Redraw backed up data
+                    const data = signaturePad.toData(); signaturePad.clear(); signaturePad.fromData(data);
                  }
              }
         }
 
-        // Camera Functions
         function stopCameraStream() {
             if (stream) {
                 stream.getTracks().forEach(track => track.stop()); stream = null;
                 if (videoFeed) {
-                    videoFeed.srcObject = null;
-                    videoFeed.style.display = 'none'; // Hide video element
-                    videoFeed.load(); // Attempt to free resources
+                    videoFeed.srcObject = null; videoFeed.style.display = 'none'; videoFeed.load();
                  }
-                console.log("Camera stopped.");
             }
         }
 
@@ -1394,97 +1415,75 @@
             if (!photoSection || photoSection.style.display === 'none') return;
             cameraErrorDiv.textContent = ''; photoErrorDiv.textContent = '';
             clearValidationErrors(['cameraError', 'photoError']);
-            stopCameraStream(); // Stop previous stream first
-            await new Promise(resolve => setTimeout(resolve, 100)); // Short delay
+            stopCameraStream();
+            await new Promise(resolve => setTimeout(resolve, 100));
 
-            startCameraBtn.disabled = true; // Disable button while starting
+            startCameraBtn.disabled = true;
             startCameraBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span> กำลังเปิด...';
 
             try {
-                 // Prefer front camera ('user')
                  const constraints = { video: { facingMode: 'user' }, audio: false };
                  stream = await navigator.mediaDevices.getUserMedia(constraints);
-
                  if (videoFeed) {
-                     videoFeed.srcObject = stream;
-                     videoFeed.style.display = 'block'; // Show video element
-                     await videoFeed.play(); // Ensure video starts playing
-
+                     videoFeed.srcObject = stream; videoFeed.style.display = 'block'; await videoFeed.play();
                      capturePhotoBtn.disabled = false; resetPhotoBtn.disabled = true;
-                     startCameraBtn.innerHTML = '<i class="fas fa-sync me-1"></i> รีสตาร์ทกล้อง';
-                     checkFormCompletion();
+                     startCameraBtn.innerHTML = '<i class="fas fa-sync me-1"></i> รีสตาร์ทกล้อง'; checkFormCompletion();
                  }
                  if (capturedPhotoPreview) capturedPhotoPreview.src = PHOTO_PREVIEW_PLACEHOLDER;
                  if (photoDataInput) photoDataInput.value = '';
-
             } catch (err) {
                 console.error("Camera Access Error:", err);
                 let msg = `เกิดข้อผิดพลาด (${err.name})`;
                 if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") msg = "ไม่อนุญาตให้เข้าถึงกล้อง";
                 else if (err.name === "NotFoundError" || err.name === "DevicesNotFoundError") msg = "ไม่พบกล้อง";
-                 else if (err.name === "NotReadableError" || err.name === "TrackStartError") msg = "กล้องอาจถูกใช้งานอยู่ หรือมีปัญหา";
-                 else if (err.name === "OverconstrainedError" || err.name === "ConstraintNotSatisfiedError") msg = "กล้องไม่รองรับการตั้งค่า";
-                 else if (err.name === "AbortError") msg = "การเข้าถึงกล้องถูกยกเลิก";
+                else if (err.name === "NotReadableError" || err.name === "TrackStartError") msg = "กล้องอาจถูกใช้งานอยู่ หรือมีปัญหา";
                 cameraErrorDiv.textContent = msg;
                 capturePhotoBtn.disabled = true; resetPhotoBtn.disabled = true;
                 startCameraBtn.innerHTML = '<i class="fas fa-video me-1"></i> เปิดกล้อง';
                  if (videoFeed) videoFeed.style.display = 'none';
-                stopCameraStream();
-                checkFormCompletion();
+                stopCameraStream(); checkFormCompletion();
              } finally {
-                 startCameraBtn.disabled = false; // Re-enable button regardless of outcome
+                 startCameraBtn.disabled = false;
              }
          }
 
          function capturePhoto() {
              if (!stream || !stream.active || !videoFeed || videoFeed.readyState < videoFeed.HAVE_METADATA) {
-                 cameraErrorDiv.textContent = 'เปิดกล้อง หรือรอให้กล้องพร้อมก่อน';
-                 return;
+                 cameraErrorDiv.textContent = 'เปิดกล้อง หรือรอให้กล้องพร้อมก่อน'; return;
               }
              clearValidationErrors(['photoError']);
-
              const videoWidth = videoFeed.videoWidth; const videoHeight = videoFeed.videoHeight;
              if (!videoWidth || !videoHeight) { cameraErrorDiv.textContent = 'ข้อผิดพลาดขนาดวิดีโอ'; return; }
 
              if (photoCanvas) {
                  photoCanvas.width = videoWidth; photoCanvas.height = videoHeight;
                  const ctx = photoCanvas.getContext('2d');
-                 // Flip image horizontally if using front camera (user facing)
                  if (stream.getVideoTracks()[0]?.getSettings()?.facingMode === 'user') {
-                      ctx.translate(videoWidth, 0);
-                      ctx.scale(-1, 1);
+                      ctx.translate(videoWidth, 0); ctx.scale(-1, 1);
                  }
                  ctx.drawImage(videoFeed, 0, 0, videoWidth, videoHeight);
-                 const dataUrl = photoCanvas.toDataURL('image/jpeg', 0.8); // Use JPEG, quality 0.8
+                 const dataUrl = photoCanvas.toDataURL('image/jpeg', 0.8);
                  if (capturedPhotoPreview) capturedPhotoPreview.src = dataUrl;
-                 if (photoDataInput) photoDataInput.value = dataUrl.split(',')[1]; // Store base64 only
+                 if (photoDataInput) photoDataInput.value = dataUrl.split(',')[1];
              }
-
-             resetPhotoBtn.disabled = false; // Enable reset
-             capturePhotoBtn.disabled = true; // Disable capture after taking one
-             checkFormCompletion(); // Check if form is now complete
-             clearValidationErrors(['photoError']); // Clear error if photo taken
+             resetPhotoBtn.disabled = false; capturePhotoBtn.disabled = true;
+             checkFormCompletion(); clearValidationErrors(['photoError']);
         }
 
          function resetPhoto() {
              clearValidationErrors(['photoError']);
              if (photoDataInput) photoDataInput.value = '';
              if (capturedPhotoPreview) capturedPhotoPreview.src = PHOTO_PREVIEW_PLACEHOLDER;
-             resetPhotoBtn.disabled = true; // Disable reset
-             if (stream && stream.active) { capturePhotoBtn.disabled = false; } // Re-enable capture if camera active
-             else { capturePhotoBtn.disabled = true; }
+             resetPhotoBtn.disabled = true;
+             if (stream && stream.active) capturePhotoBtn.disabled = false;
+             else capturePhotoBtn.disabled = true;
              checkFormCompletion();
         }
 
-
-        // Form Completion & Validation
         function addCompletionCheckListeners() {
-             // Listen to changes on visible inputs that affect completion
              dutyTypeRadios.forEach(r => r.addEventListener('change', checkFormCompletion));
              remarksInput.addEventListener('input', checkFormCompletion);
-             // Completion for location, signature, photo is checked implicitly when they are updated/acquired
-             // Teacher ID input already triggers checks
-             dutyStatusRadios.forEach(r => r.addEventListener('change', checkFormCompletion)); // Ensure status change triggers check
+             dutyStatusRadios.forEach(r => r.addEventListener('change', checkFormCompletion));
         }
 
         function checkFormCompletion() {
@@ -1500,50 +1499,50 @@
                 const photoTaken = photoDataInput.value;
                 const locationDone = latitudeInput.value && longitudeInput.value && locationAcquired;
                 isComplete = !!(dutyTypeSelected && locationDone && signatureDone && photoTaken);
-                // Debug log
-                // console.log(`Check 'มา': Type=${!!dutyTypeSelected}, Loc=${locationDone}, Sig=${!!signatureDone}, Pho=${!!photoTaken} -> Complete=${isComplete}`);
             } else if (selectedStatus === 'ลา' || selectedStatus === 'ไปราชการ') {
-                const remarksFilled = remarksInput.value.trim() !== '';
-                isComplete = remarksFilled;
-                 // console.log(`Check 'ลา'/'ราชการ': Remarks=${remarksFilled} -> Complete=${isComplete}`);
+                isComplete = remarksInput.value.trim() !== '';
             }
-
-            // console.log(`Overall Completion Check: Status=${selectedStatus}, Cache=${!!teacherDataCache}, Complete=${isComplete}`);
-            updateSubmitButtonDisplay(isComplete); // Update button based on completion
+            updateSubmitButtonDisplay(isComplete);
             return isComplete;
         }
 
         function updateSubmitButtonDisplay(isFormComplete = checkFormCompletion()) {
-             // Check if the button's section is visible first
-             const isSectionVisible = submitButtonSection && submitButtonSection.style.display !== 'none';
+            const isSectionVisible = submitButtonSection && submitButtonSection.style.display !== 'none';
 
             if (!isSectionVisible) {
-                 // If section is hidden, ensure button is disabled and has default text
-                 submitBtn.disabled = true;
-                 submitBtn.classList.replace('btn-primary','btn-secondary');
-                 submitBtn.innerHTML = `<i class="fas fa-times-circle me-2"></i> กรอกข้อมูลให้ครบ`;
-                 return;
-             }
+                submitBtn.disabled = true;
+                submitBtn.classList.replace('btn-primary', 'btn-secondary');
+                submitBtn.innerHTML = `<i class="fas fa-times-circle me-2"></i> กรอกข้อมูลให้ครบ`;
+                return;
+            }
 
-             // Section is visible, now check time and completion
-             if (checkinAllowed && isFormComplete) {
-                 submitBtn.disabled = false;
-                 submitBtn.classList.replace('btn-secondary','btn-primary'); // Use primary color for active button
-                 const windowText = currentCheckinWindow === 'morning' ? 'เช้า' : (currentCheckinWindow === 'afternoon' ? 'บ่าย' : '');
-                 submitBtn.innerHTML = `<i class="fas fa-paper-plane me-2"></i> ส่งข้อมูล ${windowText ? '(รอบ' + windowText + ')' : ''}`;
-             } else {
-                 submitBtn.disabled = true;
-                 submitBtn.classList.replace('btn-primary','btn-secondary'); // Use secondary color for inactive button
-                 if (!isFormComplete) {
-                     submitBtn.innerHTML = `<i class="fas fa-times-circle me-2"></i> กรอกข้อมูลให้ครบ`;
-                 } else { // Complete but outside window
-                     submitBtn.innerHTML = `<i class="fas fa-clock me-2"></i> นอกเวลา (${MORNING_START_TIME}-${MORNING_END_TIME} หรือ ${AFTERNOON_START_TIME}-${AFTERNOON_END_TIME})`;
-                 }
-             }
-         }
+            const { allowed, windowText: timeWindowMessage, generalWindow } = isCheckinAllowedForSelectedDuty();
+            const currentStatus = document.querySelector('input[name="dutyStatus"]:checked')?.value;
+
+            if ((currentStatus === 'มา' && allowed && isFormComplete) || ((currentStatus === 'ลา' || currentStatus === 'ไปราชการ') && isFormComplete) ) {
+                submitBtn.disabled = false;
+                submitBtn.classList.replace('btn-secondary', 'btn-primary');
+                const dutyTypeText = getSelectedDutyType() || '';
+                const generalWindowText = generalWindow === 'morning' ? 'เช้า' : (generalWindow === 'afternoon' ? 'บ่าย' : '');
+                let submitButtonText = `<i class="fas fa-paper-plane me-2"></i> ส่งข้อมูล`;
+                if (currentStatus === 'มา') {
+                     submitButtonText += ` ${dutyTypeText} ${generalWindowText ? '(รอบ' + generalWindowText + ')' : ''}`;
+                }
+                submitBtn.innerHTML = submitButtonText;
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.classList.replace('btn-primary', 'btn-secondary');
+                if (!isFormComplete) {
+                    submitBtn.innerHTML = `<i class="fas fa-times-circle me-2"></i> กรอกข้อมูลให้ครบ`;
+                } else { // Complete but outside window for 'มา' status
+                    submitBtn.innerHTML = `<i class="fas fa-clock me-2"></i> ${timeWindowMessage}`;
+                }
+            }
+        }
+
 
          function validateForm() {
-             clearValidationErrors(); // Clear previous
+             clearValidationErrors();
              let isValid = true;
              const selectedStatusRadio = document.querySelector('input[name="dutyStatus"]:checked');
              const statusValue = selectedStatusRadio ? selectedStatusRadio.value : null;
@@ -1559,39 +1558,34 @@
                  if (!remarksInput.value.trim()) { remarksErrorDiv.textContent = 'กรุณากรอกหมายเหตุ (เหตุผล)'; isValid = false; if(isValid) remarksSection.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
              }
 
-             // Final time check
-             if (isValid && !checkinAllowed) {
-                  showSweetAlert('warning', 'นอกเวลาทำการ', `สามารถลงเวลาได้เฉพาะช่วงเช้า (${MORNING_START_TIME}-${MORNING_END_TIME} น.) หรือช่วงบ่าย (${AFTERNOON_START_TIME}-${AFTERNOON_END_TIME} น.) เท่านั้น`); isValid = false;
-             }
-
-             // Scroll to first error (handled inside checks now)
-             // if (!isValid) {
-             //      const firstError = checkinForm.querySelector('.form-text.text-danger:not(:empty), .invalid-feedback:not(:empty)');
-             //      firstError?.closest('.form-section, .mb-3')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-             // }
+             if (isValid) { // Point 3: SweetAlert if outside time range on submit
+                const selectedStatus = document.querySelector('input[name="dutyStatus"]:checked')?.value;
+                if (selectedStatus === 'มา') { // Time validation only for 'มา'
+                    const { allowed, windowText } = isCheckinAllowedForSelectedDuty();
+                    if (!allowed) {
+                        showSweetAlert('warning', 'นอกเวลาทำการ', windowText); // Show specific time window message
+                        isValid = false;
+                    }
+                }
+            }
              return isValid;
          }
 
          function clearValidationErrors(exceptIds = []) {
              const errorDivs = checkinForm.querySelectorAll('.form-text.text-danger, .invalid-feedback');
-             errorDivs.forEach(div => { if (!exceptIds.includes(div.id)) { div.textContent = ''; } });
+             errorDivs.forEach(div => { if (!exceptIds.includes(div.id)) div.textContent = ''; });
          }
 
-
-        // Form Submission Handler
         async function handleCheckinFormSubmit(event) {
             event.preventDefault();
              if (isSubmitting) return;
-            if (!validateForm()) return;
-             if (SCRIPT_URL.includes('YOUR_SCRIPT_URL')) { showSweetAlert('error', 'Config Error', 'SCRIPT_URL not set', false); return; }
+            if (!validateForm()) return; // ValidateForm now includes the time check SweetAlert
+             if (SCRIPT_URL.includes('YOUR_APPS_SCRIPT_WEB_APP_URL_HERE')) { showSweetAlert('error', 'Config Error', 'SCRIPT_URL not set', false); return; }
 
-            // Confirmation
             Swal.fire({
                 title: 'ยืนยันการส่งข้อมูล?',
-                html: `ครูผู้สอน: ${teacherDataCache?.name || 'N/A'}<br>สถานะ: ${document.querySelector('input[name="dutyStatus"]:checked')?.value || 'N/A'}`,
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6', cancelButtonColor: '#d33',
+                html: `ครูผู้สอน: ${teacherDataCache?.name || 'N/A'}<br>สถานะ: ${document.querySelector('input[name="dutyStatus"]:checked')?.value || 'N/A'}<br>การปฏิบัติหน้าที่: ${getSelectedDutyType() || (document.querySelector('input[name="dutyStatus"]:checked')?.value !== 'มา' ? 'N/A' : 'ไม่ระบุ')}`,
+                icon: 'question', showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33',
                 confirmButtonText: ' <i class="fas fa-check"></i> ใช่, ยืนยัน ', cancelButtonText: '<i class="fas fa-times"></i> ยกเลิก'
             }).then(async (result) => {
                 if (result.isConfirmed) {
@@ -1599,12 +1593,9 @@
                     isSubmitting = true; statusMessage.innerHTML = ''; submitBtn.disabled = true;
                     const formData = new FormData(checkinForm);
 
-                     // Ensure correct Base64 data for signature and photo (already base64 only)
                      if (formData.get('dutyStatus') === 'มา') {
-                         // Keep signatureData and photoData as they are (should be base64 only)
-                         formData.delete('remarks'); // Remove remarks if 'มา'
+                         formData.delete('remarks');
                      } else {
-                          // Clear fields not relevant for 'ลา'/'ไปราชการ'
                           formData.delete('dutyType'); formData.delete('latitude'); formData.delete('longitude');
                           formData.delete('signatureData'); formData.delete('photoData');
                      }
@@ -1613,15 +1604,11 @@
                      let fetchSuccess = false; let successData = null; let errorMessage = 'เกิดข้อผิดพลาดไม่ทราบสาเหตุ';
 
                     try {
-                        console.log("Submitting Form Data:", Object.fromEntries(formData.entries())); // Log before sending (excluding large base64)
                         const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
-                        const fetchResult = await response.json(); // Assume JSON response
-                         console.log("Server Response (POST):", fetchResult);
-
+                        const fetchResult = await response.json();
                         if (fetchResult.status === 'success') {
                              fetchSuccess = true;
-                             const now = new Date(); const thaiDateTime = formatThaiDateTimeCustom(now); // Use custom format
-                             // Prepare photo URL for success message (if 'มา')
+                             const now = new Date(); const thaiDateTime = formatThaiDateTimeCustom(now);
                              const photoBase64 = formData.get('dutyStatus') === 'มา' ? formData.get('photoData') : null;
                              const photoDataUrl = photoBase64 ? `data:image/jpeg;base64,${photoBase64}` : null;
                              successData = { thaiDateTime, status: formData.get('dutyStatus'), photoDataUrl };
@@ -1631,199 +1618,138 @@
                     } catch (error) {
                         console.error('Submit Error:', error); errorMessage = error.message || 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้';
                     } finally {
-                        if (Swal.isVisible() && Swal.isLoading()) Swal.close(); // Close loading Swal only if it exists
-                        isSubmitting = false; submitBtn.disabled = false; // Re-enable button
+                        if (Swal.isVisible() && Swal.isLoading()) Swal.close();
+                        isSubmitting = false; submitBtn.disabled = false;
 
-                        if (fetchSuccess && successData) {
-                            // Use custom success alert
-                            showSuccessSweetAlert(successData.thaiDateTime, teacherDataCache?.name || 'N/A', successData.photoDataUrl);
-                            resetCheckinForm(); // Reset form on success
-                             // Optionally switch to dashboard after success?
-                             // switchPage('dashboardPage');
+                        if (fetchSuccess && successData) { // Point 5: Redirect to Dashboard
+                            Swal.fire({
+                                icon: 'success', title: 'บันทึกสำเร็จ!',
+                                html: `<p class="mb-1"><strong>เวลา:</strong> ${successData.thaiDateTime}</p>
+                                       <p class="mb-1"><strong>ผู้บันทึก:</strong> ${teacherDataCache?.name || 'N/A'}</p>
+                                       ${successData.photoDataUrl ? `<img src="${successData.photoDataUrl}" alt="Check-in Photo" style="max-width:150px; max-height:150px; margin-top:10px; border-radius:5px; border: 1px solid #ddd;">` : ''}
+                                       <p class="mt-2 mb-0"><small>กำลังนำทางไปยัง Dashboard...</small></p>`,
+                                confirmButtonText: 'ตกลง', timer: 3500, timerProgressBar: true,
+                                willClose: () => {
+                                    resetCheckinForm();
+                                    switchPage('dashboardPage');
+                                }
+                            });
                         } else {
                             showSweetAlert('error', 'ส่งข้อมูลไม่สำเร็จ', `ข้อผิดพลาด: ${errorMessage}`, false);
-                            // *** Reset teacher ID input on failure ***
                             teacherIdInput.value = '';
-                            hideAllCheckinSections(false); // Keep message, hide lower sections
+                            hideAllCheckinSections(false);
                             teacherLookupStatus.textContent = `ส่งข้อมูลไม่สำเร็จ กรุณาลองกรอกรหัสครูอีกครั้ง`;
                             teacherLookupStatus.className = 'form-text mt-1 small text-danger';
                             teacherIdInput.focus();
-                            // Don't reset the entire form, allow user to see previous input if needed, just clear ID
-                            checkFormCompletion(); // Re-evaluate button state
+                            checkFormCompletion();
                         }
-                    } // End finally
-                } // End if confirmed
-            }); // End confirmation Swal
+                    }
+                }
+            });
         }
 
         function resetCheckinForm() {
-             console.log("Resetting Check-in Form after success");
-             checkinForm.reset(); // Resets all standard form fields
-             hideAllCheckinSections(true); // Also clears teacher ID, photo, sig, etc., and removes status message
-             if (checkinPage.classList.contains('active')) { // Only scroll if check-in page is active
+             checkinForm.reset();
+             hideAllCheckinSections(true);
+             if (checkinPage.classList.contains('active')) {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
              }
-             updateClockAndButtonState(); // Update button state
+             updateClockAndButtonState();
         }
 
-
-
         // --- Search Statistics Functions ---
-
         function initializeSearchStats() {
-             // Initialize Date Range Picker for Stats
              $(statsDateFilterEl).daterangepicker({
-                 autoUpdateInput: false, // Don't auto-update the input value
-                 showDropdowns: true,
+                 autoUpdateInput: false, showDropdowns: true,
                  locale: {
-                     format: 'DD/MM/YYYY', // Display format
-                     separator: ' - ',
-                     applyLabel: 'เลือก', cancelLabel: 'ยกเลิก',
-                     fromLabel: 'จาก', toLabel: 'ถึง',
-                     daysOfWeek: moment.weekdaysMin(), monthNames: moment.months(),
+                     format: 'DD/MM/YYYY', separator: ' - ', applyLabel: 'เลือก', cancelLabel: 'ยกเลิก',
+                     fromLabel: 'จาก', toLabel: 'ถึง', daysOfWeek: moment.weekdaysMin(), monthNames: moment.months(),
                      firstDay: moment.localeData('th').firstDayOfWeek()
                  },
-                 ranges: { // Optional preset ranges
-                    'วันนี้': [moment(), moment()],
-                    'เมื่อวาน': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    '7 วันล่าสุด': [moment().subtract(6, 'days'), moment()],
-                    '30 วันล่าสุด': [moment().subtract(29, 'days'), moment()],
+                 ranges: {
+                    'วันนี้': [moment(), moment()], 'เมื่อวาน': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    '7 วันล่าสุด': [moment().subtract(6, 'days'), moment()], '30 วันล่าสุด': [moment().subtract(29, 'days'), moment()],
                     'เดือนนี้': [moment().startOf('month'), moment().endOf('month')],
                     'เดือนที่แล้ว': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
                  }
              });
-
-             // Handle apply event for daterangepicker
              $(statsDateFilterEl).on('apply.daterangepicker', function(ev, picker) {
                  $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-                 filterStatsTable(); // Apply filter
+                 filterStatsTable();
              });
-
-             // Handle cancel event
              $(statsDateFilterEl).on('cancel.daterangepicker', function(ev, picker) {
-                 $(this).val(''); // Clear input
-                 filterStatsTable(); // Apply filter (show all dates)
+                 $(this).val(''); filterStatsTable();
              });
 
-
-             // Initialize DataTable
              statsDataTable = statsTableEl.DataTable({
                  language: { url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/th.json" },
                  columns: [
-                     { // คอลัมน์ 1: รูปที่บันทึก
+                     {
                          data: 'checkinPhotoUrl', orderable: false, searchable: false,
                          render: function(data, type, row) {
-                             // Check-in Photo with zoom/alert functionality
                              const imgSrc = data || CHECKIN_PHOTO_PLACEHOLDER;
                              return `<img src="${imgSrc}" class="table-img stats-table-img" alt="รูปที่บันทึก" onerror="this.onerror=null; this.src='${CHECKIN_PHOTO_PLACEHOLDER}';" data-img-src="${imgSrc}">`;
                          }
                      },
-                     { data: 'level', defaultContent: 'N/A' }, // คอลัมน์ 2: ระดับชั้น
-                     { data: 'dutyOrStatus' }, // คอลัมน์ 3: ปฏิบัติหน้าที่/สถานะ
-                     { // คอลัมน์ 4: วันที่ เวลาบันทึก
-                         data: 'timestamp',
-                         render: function(data) {
-                             return formatThaiDateTimeCustom(data); // Use the new custom format
-                         }
-                     }
+                     { data: 'level', defaultContent: 'N/A' },
+                     { data: 'dutyOrStatus' },
+                     { data: 'timestamp', render: function(data) { return formatThaiDateTimeCustom(data); } }
                  ],
-                 order: [[3, 'desc']], // Default sort by timestamp descending (column index 3)
-                 responsive: true,
-                 pageLength: 10,
+                 order: [[3, 'desc']], responsive: true, pageLength: 10,
                  lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "ทั้งหมด"] ],
-                  dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' + // Length + Filter Input
-                       '<"row dt-row"<"col-sm-12"tr>>' + // Table
-                       '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>', // Info + Pagination
-                  drawCallback: function(settings) { // Add drawCallback for event listeners
-                      addStatsImageEventListeners(); // Attach listeners after draw
-                  }
+                  dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' +
+                       '<"row dt-row"<"col-sm-12"tr>>' +
+                       '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+                  drawCallback: function(settings) { addStatsImageEventListeners(); }
              });
 
-            // Event listeners
-            if(searchStatsBtn) searchStatsBtn.addEventListener('click', handleSearchStats); else console.warn("Search Element Missing: searchStatsBtn");
-            if(searchTeacherIdInput) searchTeacherIdInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') { handleSearchStats(); } }); else console.warn("Search Element Missing: searchTeacherIdInput");
-
-             // Stats Filter Listeners
-             statsDutyFilterEl.addEventListener('change', filterStatsTable);
-             resetStatsFilterBtn.addEventListener('click', resetStatsFilters);
+            if(searchStatsBtn) searchStatsBtn.addEventListener('click', handleSearchStats);
+            if(searchTeacherIdInput) searchTeacherIdInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSearchStats(); });
+            statsDutyFilterEl.addEventListener('change', filterStatsTable);
+            resetStatsFilterBtn.addEventListener('click', resetStatsFilters);
          }
 
         async function handleSearchStats() {
             const teacherId = searchTeacherIdInput.value.trim();
-            searchMessage.textContent = ''; // Clear previous messages
-            searchResultArea.style.display = 'none'; // Hide previous results
-            statsDataCache = null; // Clear previous data cache
-            resetStatsFilters(); // Reset filters on new search
+            searchMessage.textContent = ''; searchResultArea.style.display = 'none';
+            statsDataCache = null; resetStatsFilters();
 
-            if (!teacherId || teacherId.length !== 4 || !/^\d+$/.test(teacherId)) { // Check if 4 digits
+            if (!teacherId || teacherId.length !== 4 || !/^\d+$/.test(teacherId)) {
                 searchMessage.textContent = 'กรุณากรอกรหัสครู 4 หลัก (ตัวเลข)'; searchMessage.className = 'mt-2 small text-danger';
-                // *** ADD SWEETALERT FOR INVALID INPUT ***
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'รูปแบบรหัสไม่ถูกต้อง',
-                    text: 'กรุณากรอกรหัสครู 4 หลัก (ตัวเลข)',
-                    timer: 3000,
-                    timerProgressBar: true
-                });
+                Swal.fire({ icon: 'warning', title: 'รูปแบบรหัสไม่ถูกต้อง', text: 'กรุณากรอกรหัสครู 4 หลัก (ตัวเลข)', timer: 3000, timerProgressBar: true });
                 return;
             }
-             if (SCRIPT_URL.includes('YOUR_SCRIPT_URL')) { showSweetAlert('error', 'Config Error', 'SCRIPT_URL not set', false); return; }
+             if (SCRIPT_URL.includes('YOUR_APPS_SCRIPT_WEB_APP_URL_HERE')) { showSweetAlert('error', 'Config Error', 'SCRIPT_URL not set', false); return; }
 
             searchMessage.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span> กำลังค้นหา...';
-            searchMessage.className = 'mt-2 small text-muted';
-             showLoading(true);
+            searchMessage.className = 'mt-2 small text-muted'; showLoading(true);
 
             try {
                  const url = `${SCRIPT_URL}?action=getTeacherStats&id=${encodeURIComponent(teacherId)}`;
                  const response = await fetch(url);
                  if (!response.ok) throw new Error(`Server error (${response.status}): ${response.statusText}`);
                  const data = await response.json();
-                 console.log("Teacher Stats Received:", data);
 
                  if (data.status === 'success') {
-                     statsDataCache = data.checkinHistory || []; // Store history data
-                     displayTeacherStats(data.teacherInfo, statsDataCache); // Display info and initial table
+                     statsDataCache = data.checkinHistory || [];
+                     displayTeacherStats(data.teacherInfo, statsDataCache);
                      searchMessage.textContent = `พบข้อมูลสำหรับครู: ${data.teacherInfo?.name || teacherId}`;
                      searchMessage.className = 'mt-2 small text-success';
-                     // *** ADD SWEETALERT FOR SUCCESS ***
-                     Swal.fire({
-                         icon: 'success',
-                         title: 'พบข้อมูล',
-                         html: `แสดงข้อมูลสถิติสำหรับครู: <strong>${data.teacherInfo?.name || teacherId}</strong>`,
-                         showConfirmButton: true,
-						 timer: 5000,
-                         timerProgressBar: true
-                     });
+                     Swal.fire({ icon: 'success', title: 'พบข้อมูล', html: `แสดงข้อมูลสถิติสำหรับครู: <strong>${data.teacherInfo?.name || teacherId}</strong>`, timer: 3000, timerProgressBar: true, showConfirmButton:false });
                  } else if (data.status === 'notfound') {
                       searchMessage.textContent = data.message || `ไม่พบข้อมูลครูรหัส ${teacherId}`;
                       searchMessage.className = 'mt-2 small text-warning';
-                      searchResultArea.style.display = 'none';
                       if (statsDataTable) statsDataTable.clear().draw();
-                      // *** ADD SWEETALERT FOR NOT FOUND ***
-                      Swal.fire({
-                          icon: 'warning',
-                          title: 'ไม่พบข้อมูล',
-                          text: data.message || `ไม่พบข้อมูลครูสำหรับรหัส ${teacherId}`,
-						  showConfirmButton: true,
-                          timer: 5000,
-                          timerProgressBar: true
-                      });
+                      Swal.fire({ icon: 'warning', title: 'ไม่พบข้อมูล', text: data.message || `ไม่พบข้อมูลครูสำหรับรหัส ${teacherId}`, timer: 3000, timerProgressBar: true, showConfirmButton:false });
                  } else {
                      throw new Error(data.message || 'Failed to load teacher statistics');
                  }
-
             } catch (error) {
                  console.error('Error loading teacher stats:', error);
                  searchMessage.textContent = `เกิดข้อผิดพลาด: ${error.message}`;
                  searchMessage.className = 'mt-2 small text-danger';
-                  searchResultArea.style.display = 'none';
                   if (statsDataTable) statsDataTable.clear().draw();
-                 // *** ADD SWEETALERT FOR ERROR ***
-                 Swal.fire({
-                    icon: 'error',
-                    title: 'เกิดข้อผิดพลาด',
-                    text: `ไม่สามารถโหลดข้อมูลสถิติได้: ${error.message}`
-                 });
+                 Swal.fire({ icon: 'error', title: 'เกิดข้อผิดพลาด', text: `ไม่สามารถโหลดข้อมูลสถิติได้: ${error.message}` });
             } finally {
                  showLoading(false);
             }
@@ -1832,180 +1758,126 @@
          function displayTeacherStats(teacherInfo, history) {
             if (!teacherInfo || !searchResultArea) {
                 if(searchResultArea) searchResultArea.style.display = 'none';
-                 if(statsDataTable) statsDataTable.clear().draw();
+                if(statsDataTable) statsDataTable.clear().draw();
                 return;
              }
-
-             // Populate teacher info card
-             statsTeacherPhoto.src = teacherInfo.photoUrl || PLACEHOLDER_IMG; // Profile photo
+             statsTeacherPhoto.src = teacherInfo.photoUrl || PLACEHOLDER_IMG;
              statsTeacherPhoto.onerror = () => { statsTeacherPhoto.src = PLACEHOLDER_IMG; };
              statsTeacherName.textContent = teacherInfo.name || 'N/A';
              statsTeacherDepartment.textContent = teacherInfo.department || 'N/A';
-             statsTeacherLevel.textContent = `ระดับชั้น: ${teacherInfo.level || 'N/A'}`; // Display Level
+             statsTeacherLevel.textContent = `ระดับชั้น: ${teacherInfo.level || 'N/A'}`;
 
-             // Calculate and Populate Stats Cards
-             let totalDaysSet = new Set();
-             let presentCount = 0;
-             let leaveCount = 0;
-             let tripCount = 0;
-
+             let totalDaysSet = new Set(); let presentCount = 0; let leaveCount = 0; let tripCount = 0;
              if (history && history.length > 0) {
                  history.forEach(log => {
-                     // Count distinct days
-                     const date = moment(log.timestamp).format('YYYY-MM-DD');
-                     totalDaysSet.add(date);
-
-                     // Count status occurrences
+                     totalDaysSet.add(moment(log.timestamp).format('YYYY-MM-DD'));
                      const status = log.dutyOrStatus || '';
-                     if (status === 'ลา') {
-                         leaveCount++;
-                     } else if (status === 'ไปราชการ') {
-                         tripCount++;
-                     } else if (status.includes('มา') || status === 'เวรยืนประตู' || status === 'ตรวจอาคาร') {
-                         presentCount++; // Counts each 'มา' record
-                     }
+                     if (status === 'ลา') leaveCount++;
+                     else if (status === 'ไปราชการ') tripCount++;
+                     else if (status.includes('มา') || status === 'เวรยืนประตู' || status === 'ตรวจอาคาร' || status === 'ระดับ' || status === 'กรรมการประจำจุด') presentCount++;
                  });
              }
-             statsTotalDaysEl.textContent = totalDaysSet.size; // Total distinct days recorded
+             statsTotalDaysEl.textContent = totalDaysSet.size;
              statsPresentDaysEl.textContent = presentCount;
              statsLeaveDaysEl.textContent = leaveCount;
              statsTripDaysEl.textContent = tripCount;
 
-             // Populate data table (initially unfiltered)
              if (statsDataTable) {
-                 statsDataTable.clear();
-                 statsDataTable.rows.add(history || []); // Add check-in history
-                 statsDataTable.order([3, 'desc']).draw(); // Ensure sorted by date descending
+                 statsDataTable.clear().rows.add(history || []).order([3, 'desc']).draw();
              }
-
-             searchResultArea.style.display = 'block'; // Show the results area
-             filterStatsTable(); // Apply any default/existing filter values initially
+             searchResultArea.style.display = 'block';
+             filterStatsTable();
         }
 
-        // Function to handle image clicks in Stats Table
         function addStatsImageEventListeners() {
              $('#statsTable tbody').off('click', 'img.stats-table-img').on('click', 'img.stats-table-img', function() {
                 const src = $(this).data('img-src');
                  if (src && src !== CHECKIN_PHOTO_PLACEHOLDER) {
-                    Swal.fire({
-                        imageUrl: src, imageHeight: 400, imageAlt: 'รูปที่บันทึก',
-                        showConfirmButton: true, confirmButtonText: 'ปิด'
-                    });
-                 } else {
-                    // Optional: show message if placeholder clicked
-                    // showSweetAlert('info', 'ไม่มีรูปภาพ', 'ไม่มีรูปภาพประกอบการบันทึกนี้');
+                    Swal.fire({ imageUrl: src, imageHeight: 400, imageAlt: 'รูปที่บันทึก', confirmButtonText: 'ปิด' });
                  }
             });
         }
 
-        // Function to filter Stats Table Data (Client-Side)
          function filterStatsTable() {
              if (!statsDataTable || statsDataCache === null) return;
-
-             const selectedDuty = statsDutyFilterEl.value; // Get duty filter value
+             const selectedDuty = statsDutyFilterEl.value;
              const dateRange = $(statsDateFilterEl).data('daterangepicker');
-             const startDate = dateRange && dateRange.startDate ? dateRange.startDate.startOf('day') : null;
-             const endDate = dateRange && dateRange.endDate ? dateRange.endDate.endOf('day') : null;
+             const startDate = dateRange && dateRange.startDate && dateRange.startDate.isValid() ? dateRange.startDate.startOf('day') : null;
+             const endDate = dateRange && dateRange.endDate && dateRange.endDate.isValid() ? dateRange.endDate.endOf('day') : null;
 
-             // Apply filters to the DataTable
+             $.fn.dataTable.ext.search.pop(); // Clear previous search functions
              $.fn.dataTable.ext.search.push(
                  function(settings, data, dataIndex) {
-                     // Duty/Status Filter
-                     const dutyStatus = data[2] || ''; // Column index 2 for Duty/Status
-                     if (selectedDuty && dutyStatus !== selectedDuty) {
-                         // If duty is selected and doesn't match, filter out
-                         // Handle 'มา (ไม่ระบุ)' case - needs exact match or complex logic if matching parts
-                          if (selectedDuty === 'มา \\(ไม่ระบุ\\)' && dutyStatus !== 'มา (ไม่ระบุ)') return false;
-                          if (selectedDuty !== 'มา \\(ไม่ระบุ\\)' && dutyStatus !== selectedDuty) return false;
+                     const dutyStatusInRow = data[2] || ''; // Column for Duty/Status
+                     const timestampInRow = statsDataCache[dataIndex].timestamp; // Original ISO timestamp
+                     const recordDate = moment(timestampInRow);
 
-                     }
-
-                     // Date Filter
-                     const timestamp = data[3] || ''; // Column index 3 for formatted Timestamp
-                     const recordDate = moment(statsDataCache[dataIndex].timestamp); // Use original ISO timestamp from cache for reliable comparison
-
-                     if (startDate && endDate && recordDate.isValid()) {
-                         if (!recordDate.isBetween(startDate, endDate, undefined, '[]')) { // '[]' includes start and end dates
-                             return false; // Filter out if outside the date range
+                     let dutyMatch = true;
+                     if (selectedDuty) {
+                         // For "มา (ไม่ระบุ)" we need an exact match.
+                         // For other duty types, also exact match.
+                         if (selectedDuty === "มา \\(ไม่ระบุ\\)") { // Check for the escaped value if that's what your dropdown sends
+                             dutyMatch = (dutyStatusInRow === "มา (ไม่ระบุ)");
+                         } else {
+                             dutyMatch = (dutyStatusInRow === selectedDuty);
                          }
                      }
 
-                     return true; // Keep row if it passes all filters
+                     let dateMatch = true;
+                     if (startDate && endDate && recordDate.isValid()) {
+                         dateMatch = recordDate.isBetween(startDate, endDate, undefined, '[]');
+                     } else if ($(statsDateFilterEl).val() && (!startDate || !endDate)) { // If datepicker has text but dates are invalid
+                         dateMatch = false; // Consider it a non-match if filter is attempted with invalid dates
+                     }
+
+
+                     return dutyMatch && dateMatch;
                  }
              );
-
-             statsDataTable.draw(); // Redraw the table with applied filters
-             $.fn.dataTable.ext.search.pop(); // Remove the temporary filter function
+             statsDataTable.draw();
          }
 
-         // Function to reset Stats Filters
          function resetStatsFilters() {
-            // Reset Date Picker
             $(statsDateFilterEl).val('');
-            $(statsDateFilterEl).data('daterangepicker').setStartDate(moment()); // Reset internal dates if needed
-            $(statsDateFilterEl).data('daterangepicker').setEndDate(moment());
-
-             // Reset Duty Select
-             statsDutyFilterEl.value = ""; // Set to empty value (for 'all')
-
-             // Re-apply filters (which will now show all data)
-             filterStatsTable();
+            const drp = $(statsDateFilterEl).data('daterangepicker');
+            if (drp) { // Ensure daterangepicker is initialized
+                drp.setStartDate(moment()); // Reset to avoid issues, or clear them
+                drp.setEndDate(moment());
+                $(statsDateFilterEl).val(''); // Explicitly clear the input
+            }
+            statsDutyFilterEl.value = "";
+            filterStatsTable(); // This will redraw with no filters active
          }
 
     </script>
 
 <script language="javascript">
+    // This function is from your original script to display clock on check-in page
     function showTime(){
+        const now = new Date();
+        const thday = ["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัส","ศุกร์","เสาร์"];
+        const thmonth = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน", "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
 
+        const h = now.getHours();
+        const m = now.getMinutes();
+        const s = now.getSeconds();
 
+        const formattedH = (h < 10 ? "0" : "") + h;
+        const formattedM = (m < 10 ? "0" : "") + m;
+        const formattedS = (s < 10 ? "0" : "") + s;
 
-now = new Date();
-var thday = new Array ("อาทิตย์","จันทร์",
-"อังคาร","พุธ","พฤหัส","ศุกร์","เสาร์");
-var thmonth = new Array ("มกราคม","กุมภาพันธ์","มีนาคม",
-"เมษายน","พฤษภาคม","มิถุนายน", "กรกฎาคม","สิงหาคม","กันยายน",
-"ตุลาคม","พฤศจิกายน","ธันวาคม");
+        const time = "วัน" + thday[now.getDay()]+ "ที่ "+ now.getDate()+ " " +
+                     thmonth[now.getMonth()]+ " " + "พ.ศ."+ (now.getFullYear()+543) + // Corrected year
+                     " เวลา  " +  formattedH + ":" + formattedM + ":" + formattedS + " น.";
 
-// document.write("วัน" + thday[now.getDay()]+ "ที่ "+ now.getDate()+ " " +
-// thmonth[now.getMonth()]+ " " + (0+now.getYear()+543));
-
-
-    var date2 = new Date();
-    var h = date2.getHours(); // 0 - 23
-    var m = date2.getMinutes(); // 0 - 59
-    var s = date2.getSeconds(); // 0 - 59
-    var session = "น.";
-    
-    if(h == 0){
-        h = 24;
+        if (MyClockDisplay) { // Check if element exists
+             MyClockDisplay.innerText = time;
+             // MyClockDisplay.textContent = time; // innerText is usually sufficient
+        }
+        setTimeout(showTime, 1000);
     }
-    
-    if(h > 24){
-        h = h - 24;
-        session = "น.";
-    }
-    
-    h = (h < 10) ? "0" + h : h;
-    m = (m < 10) ? "0" + m : m;
-    s = (s < 10) ? "0" + s : s;
-    
-    var time = " วัน" + thday[now.getDay()]+ "ที่ "+ now.getDate()+ " " +
-    thmonth[now.getMonth()]+ " " + "พ.ศ."+ (now.getYear()+2443) +" เวลา  " +  h + ":" + m + ":" + s + " " + session;
-    document.getElementById("MyClockDisplay").innerText = time;
-    document.getElementById("MyClockDisplay").textContent = time;
-    
-    setTimeout(showTime, 1000);
-
-}
-
-showTime();
-
-    </script>
-
-<script>
-
-
-
+    // showTime(); // Called in DOMContentLoaded now
+</script>
 
 </body>
 </html>
