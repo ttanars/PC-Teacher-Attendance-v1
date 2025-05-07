@@ -1769,7 +1769,7 @@ async function handleDutyStatusChange(event) {
              statsTeacherPhoto.onerror = () => { statsTeacherPhoto.src = PLACEHOLDER_IMG; };
              statsTeacherName.textContent = teacherInfo.name || 'N/A';
              statsTeacherDepartment.textContent = teacherInfo.department || 'N/A';
-             statsTeacherLevel.textContent = `ระดับชั้น: ${teacherInfo.level || 'N/A'}`;
+             statsTeacherLevel.textContent = `${teacherInfo.level || 'N/A'}`;
 
              let totalDaysSet = new Set(); let presentCount = 0; let leaveCount = 0; let tripCount = 0;
              if (history && history.length > 0) {
