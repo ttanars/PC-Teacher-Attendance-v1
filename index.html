@@ -1475,6 +1475,7 @@ async function handleDutyStatusChange(event) {
          function resetPhoto() {
              clearValidationErrors(['photoError']);
              if (photoDataInput) photoDataInput.value = '';
+ 	     if (videoFeed) videoFeed.style.display = 'block';
              if (capturedPhotoPreview) capturedPhotoPreview.src = PHOTO_PREVIEW_PLACEHOLDER;
              resetPhotoBtn.disabled = true;
              if (stream && stream.active) capturePhotoBtn.disabled = false;
