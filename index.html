@@ -342,14 +342,7 @@
                             <div id="locationError" class="form-text text-danger mt-1 small"></div>
                         </div>
 
-                        <div id="signatureSection" class="form-section border-top pt-3 mt-3" style="display:none;">
-                            <label for="signatureCanvas" class="form-label"><i class="fas fa-signature me-2 text-success"></i>ลงลายมือชื่อ</label>
-                            <div class="signature-pad-container"> <canvas id="signatureCanvas"></canvas> </div>
-                            <button type="button" class="btn btn-sm btn-outline-secondary mt-2" id="resetSignatureBtn"><i class="fas fa-eraser me-1"></i> ล้างลายเซ็น</button>
-                            <input type="hidden" id="signatureData" name="signatureData"> <div id="signatureError" class="invalid-feedback d-block small"></div>
-                        </div>
-
-                       <div id="photoSection" class="form-section border-top pt-3 mt-3" style="display:none;">
+                        <div id="photoSection" class="form-section border-top pt-3 mt-3" style="display:none;">
                             <label class="form-label"><i class="fas fa-camera me-2 text-info"></i>ถ่ายภาพยืนยัน ณ ขณะนั้น</label>
                             <div class="row g-2 align-items-start">
                                 <div class="col-md-6">
@@ -366,6 +359,14 @@
                             </div>
                             <div id="cameraError" class="form-text text-danger mt-1 text-center small"></div>
                             <div id="photoError" class="invalid-feedback d-block text-center small"></div>
+                        </div>
+						
+						
+                        <div id="signatureSection" class="form-section border-top pt-3 mt-3" style="display:none;">
+                            <label for="signatureCanvas" class="form-label"><i class="fas fa-signature me-2 text-success"></i>ลงลายมือชื่อ</label>
+                            <div class="signature-pad-container"> <canvas id="signatureCanvas"></canvas> </div>
+                            <button type="button" class="btn btn-sm btn-outline-secondary mt-2" id="resetSignatureBtn"><i class="fas fa-eraser me-1"></i> ล้างลายเซ็น</button>
+                            <input type="hidden" id="signatureData" name="signatureData"> <div id="signatureError" class="invalid-feedback d-block small"></div>
                         </div>
 
                         <div id="submitButtonSection" class="form-section d-grid gap-2 mt-4 pt-3 border-top" style="display:none;">
