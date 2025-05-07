@@ -1805,10 +1805,25 @@ async function handleDutyStatusChange(event) {
          function filterStatsTable() {
              if (!statsDataTable || statsDataCache === null) return;
              const selectedDuty = statsDutyFilterEl.value;
-             const dateRange = $(statsDateFilterEl).data('daterangepicker');
-             const startDate = dateRange && dateRange.startDate && dateRange.startDate.isValid() ? dateRange.startDate.startOf('day') : null;
-             const endDate = dateRange && dateRange.endDate && dateRange.endDate.isValid() ? dateRange.endDate.endOf('day') : null;
+             //const dateRange = $(statsDateFilterEl).data('daterangepicker');
+             //const startDate = dateRange && dateRange.startDate && dateRange.startDate.isValid() ? dateRange.startDate.startOf('day') : null;
+             //const endDate = dateRange && dateRange.endDate && dateRange.endDate.isValid() ? dateRange.endDate.endOf('day') : null;
 
+	     const dateInputVal = $(statsDateFilterEl).val(); // อ่านค่าจากช่อง input โดยตรง
+		let startDate = null;
+		let endDate = null;
+		
+		if (dateInputVal) { // ตรวจสอบว่าช่อง input มีค่า (ผู้ใช้ได้เลือกช่วงวันที่) หรือไม่
+		    const dateRange = $(statsDateFilterEl).data('daterangepicker');
+		    if (dateRange && dateRange.startDate && dateRange.startDate.isValid()) {
+		        startDate = dateRange.startDate.startOf('day');
+		    }
+		    if (dateRange && dateRange.endDate && dateRange.endDate.isValid()) {
+		        endDate = dateRange.endDate.endOf('day');
+		    }
+		}
+		// หาก dateInputVal ว่างเปล่า, startDate และ endDate จะยังคงเป็น null
+	 
              $.fn.dataTable.ext.search.pop(); // Clear previous search functions
              $.fn.dataTable.ext.search.push(
                  function(settings, data, dataIndex) {
