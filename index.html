@@ -1464,6 +1464,9 @@ async function handleDutyStatusChange(event) {
                  const dataUrl = photoCanvas.toDataURL('image/jpeg', 0.8);
                  if (capturedPhotoPreview) capturedPhotoPreview.src = dataUrl;
                  if (photoDataInput) photoDataInput.value = dataUrl.split(',')[1];
+		// --- เพิ่มบรรทัดนี้เพื่อซ่อน videoFeed ---
+		 if (videoFeed) videoFeed.style.display = 'none';
+                 // -----------------------------------------
              }
              resetPhotoBtn.disabled = false; capturePhotoBtn.disabled = true;
              checkFormCompletion(); clearValidationErrors(['photoError']);
