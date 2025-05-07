@@ -215,6 +215,27 @@
                                       </div>
                              </div>
                          </div>
+
+
+			<div class="row g-3 mb-3">
+				<div class="col-md-6">
+					<div class="card text-dark bg-secondary shadow-sm h-100"> <div class="card-body p-2">
+						<h6 class="card-title"><i class="fas fa-chalkboard-teacher me-1"></i> ระดับ (บันทึก)</h6>
+						<p class="card-text" id="levelDutyCount">0</p>
+							<small class="card-text-small">(คน - วันนี้)</small>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="card text-dark bg-light shadow-sm h-100"> <div class="card-body p-2">
+							<h6 class="card-title"><i class="fas fa-users-cog me-1"></i> กรรมการประจำจุด (บันทึก)</h6>
+							<p class="card-text" id="pointCommitteeDutyCount">0</p>
+							<small class="card-text-small">(คน - วันนี้)</small>
+							</div>
+						</div>
+					</div>
+				</div>
+		     
                      </div>
                      <div class="row g-2 mb-3 align-items-center bg-light p-2 rounded border shadow-sm">
                          <div class="col-lg-3 col-md-6">
@@ -556,6 +577,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const loggedTodayCountEl = document.getElementById('loggedTodayCount');
         const gateDutyCountEl = document.getElementById('gateDutyCount');
         const buildingDutyCountEl = document.getElementById('buildingDutyCount');
+	const levelDutyCountEl = document.getElementById('levelDutyCount');
+	const pointCommitteeDutyCountEl = document.getElementById('pointCommitteeDutyCount');
         const dashboardDateFilterEl = document.getElementById('dashboardDateFilter');
         const dashboardLevelFilterEl = document.getElementById('dashboardLevelFilter');
         const dashboardDutyFilterEl = document.getElementById('dashboardDutyFilter');
@@ -898,15 +921,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
          function updateDashboardCards(counts) {
-             if (counts) {
-                 loggedTodayCountEl.textContent = `${counts.loggedToday || 0} / ${counts.totalTeachers || 0}`;
-                 gateDutyCountEl.textContent = `${counts.gateDutyLogged || 0}`;
-                 buildingDutyCountEl.textContent = `${counts.buildingDutyLogged || 0}`;
-             } else {
-                loggedTodayCountEl.textContent = '0 / 0';
-                gateDutyCountEl.textContent = '0';
-                buildingDutyCountEl.textContent = '0';
-             }
+            if (counts) {
+			if(loggedTodayCountEl) loggedTodayCountEl.textContent = `${counts.loggedToday || 0} / ${counts.totalTeachers || 0}`;
+			if(gateDutyCountEl) gateDutyCountEl.textContent = `${counts.gateDutyLogged || 0}`;
+			if(buildingDutyCountEl) buildingDutyCountEl.textContent = `${counts.buildingDutyLogged || 0}`;
+			if(levelDutyCountEl) levelDutyCountEl.textContent = `${counts.levelDutyLogged || 0}`; // อัปเดตจำนวน ระดับ
+			if(pointCommitteeDutyCountEl) pointCommitteeDutyCountEl.textContent = `${counts.pointCommitteeDutyLogged || 0}`; // อัปเดตจำนวน กรรมการประจำจุด
+			} else {
+			if(loggedTodayCountEl) loggedTodayCountEl.textContent = '0 / 0';
+			if(gateDutyCountEl) gateDutyCountEl.textContent = '0';
+			if(buildingDutyCountEl) buildingDutyCountEl.textContent = '0';
+			if(levelDutyCountEl) levelDutyCountEl.textContent = '0';
+			if(pointCommitteeDutyCountEl) pointCommitteeDutyCountEl.textContent = '0';
+			}
         }
 
          function populateLevelFilter(selectElement, data) {
