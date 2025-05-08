@@ -917,20 +917,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
          function updateDashboardCards(counts) {
-            if (counts) {
-			if(loggedTodayCountEl) loggedTodayCountEl.textContent = `${counts.loggedToday || 0} / ${counts.totalTeachers || 0}`;
-			if(gateDutyCountEl) gateDutyCountEl.textContent = `${counts.gateDutyLogged || 0}`;
-			if(buildingDutyCountEl) buildingDutyCountEl.textContent = `${counts.buildingDutyLogged || 0}`;
-			if(levelDutyCountEl) levelDutyCountEl.textContent = `${counts.levelDutyLogged || 0}`; // อัปเดตจำนวน ระดับ
-			if(pointCommitteeDutyCountEl) pointCommitteeDutyCountEl.textContent = `${counts.pointCommitteeDutyLogged || 0}`; // อัปเดตจำนวน กรรมการประจำจุด
-			} else {
-			if(loggedTodayCountEl) loggedTodayCountEl.textContent = '0 / 0';
-			if(gateDutyCountEl) gateDutyCountEl.textContent = '0';
-			if(buildingDutyCountEl) buildingDutyCountEl.textContent = '0';
-			if(levelDutyCountEl) levelDutyCountEl.textContent = '0';
-			if(pointCommitteeDutyCountEl) pointCommitteeDutyCountEl.textContent = '0';
-			}
-        }
+    if (counts) {
+        if(loggedTodayCountEl) loggedTodayCountEl.textContent = `${counts.loggedToday || 0} / ${counts.totalTeachers || 0}`;
+        if(gateDutyCountEl) gateDutyCountEl.textContent = `${counts.gateDutyLogged || 0}`;
+        if(buildingDutyCountEl) buildingDutyCountEl.textContent = `${counts.buildingDutyLogged || 0}`;
+        if(levelDutyCountEl) levelDutyCountEl.textContent = `${counts.levelDutyLogged || 0}`; // Ensure this line is present
+        if(pointCommitteeDutyCountEl) pointCommitteeDutyCountEl.textContent = `${counts.pointCommitteeDutyLogged || 0}`; // Ensure this line is present
+    } else {
+        if(loggedTodayCountEl) loggedTodayCountEl.textContent = '0 / 0';
+        if(gateDutyCountEl) gateDutyCountEl.textContent = '0';
+        if(buildingDutyCountEl) buildingDutyCountEl.textContent = '0';
+        if(levelDutyCountEl) levelDutyCountEl.textContent = '0'; // Ensure this line is present
+        if(pointCommitteeDutyCountEl) pointCommitteeDutyCountEl.textContent = '0'; // Ensure this line is present
+    }
+}
 
          function populateLevelFilter(selectElement, data) {
              if (!selectElement || !data) return;
