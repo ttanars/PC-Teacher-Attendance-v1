@@ -916,7 +916,7 @@ document.addEventListener('DOMContentLoaded', () => {
                  }
             } catch (error) {
                 console.error('Error loading dashboard data:', error);
-                showSweetAlert('error', 'เกิดข้อผิดพลาด', `ไม่สามารถโหลดข้อมูล Dashboard ได้: ${error.message}`, false);
+                showSweetAlert('error', 'เกิดข้อผิดพลาด', `โหลดข้อมูลไม่สำเร็จ:กรุณากดปุ่มรีเฟรช`, false);
                 if (dashboardDataTable) dashboardDataTable.clear().draw();
                 updateDashboardCards(null);
                  dashboardDataCache = [];
