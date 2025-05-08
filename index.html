@@ -186,13 +186,13 @@
                            <h5 class="mb-3 mt-3"><i class="fas fa-tachometer-alt me-2 text-primary"></i><b> Dashboard สรุปข้อมูล</h5>
                      </div>
 
-                          <div class="row g-3 mb-3">
+			<div class="row g-3 mb-3">
                          <div class="col-md-4">
                              <div class="card text-white bg-success shadow-sm h-100">
                                  <div class="card-body p-2">
-                                     <h6 class="card-title"><i class="fas fa-users me-1"></i> ครูบันทึกข้อมูล</h6>
+                                     <h6 class="card-title"><i class="fas fa-users me-1"></i> ครูมาปฏิบัติหน้าที่</h6>
                                      <p class="card-text" id="loggedTodayCount">0 / 0</p>
-                                     <small class="card-text-small">(บันทึกวันนี้ / ทั้งหมด)</small>
+                                     <small class="card-text-small">(บันทึกวันนี้ / ครูทั้งหมด)</small>
                                  </div>
                              </div>
                          </div>
@@ -214,25 +214,33 @@
                                       </div>
                              </div>
                          </div>
-						 
-			<div class="col-md-6">
-			     <div class="card text-white bg-primary shadow-sm h-100"> <div class="card-body p-2">
-					<h6 class="card-title text-white"><i class="fas fa-chalkboard-teacher me-1"></i> ระดับ (บันทึก)</h6>
-					<p class="card-text" id="levelDutyCount">0</p>
-					<small class="card-text-small text-white">(คน - วันนี้)</small>
-					</div>
-			     </div>
-			</div>
-			<div class="col-md-6">
-				<div class="card text-white bg-secondary shadow-sm h-100"> <div class="card-body p-2">
-					<h6 class="card-title text-white"><i class="fas fa-users-cog me-1"></i> กรรมการประจำจุด (บันทึก)</h6>
-					<p class="card-text text-white" id="pointCommitteeDutyCount">0</p>
-					<small class="card-text-small text-white">(คน - วันนี้)</small>
-				</div>
-				</div>
-			</div>
-			 
-                     </div>  
+
+                        <div class="col-md-4"> <div class="card text-white bg-primary shadow-sm h-100"> <div class="card-body p-2">
+                                <h6 class="card-title text-white"><i class="fas fa-chalkboard-teacher me-1"></i> ระดับ (บันทึก)</h6>
+                                <p class="card-text" id="levelDutyCount">0</p>
+                                <small class="card-text-small text-white">(คน - วันนี้)</small>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="col-md-4"> <div class="card text-white bg-secondary shadow-sm h-100"> <div class="card-body p-2">
+                                <h6 class="card-title text-white"><i class="fas fa-users-cog me-1"></i> กรรมการประจำจุด (บันทึก)</h6>
+                                <p class="card-text text-white" id="pointCommitteeDutyCount">0</p>
+                                <small class="card-text-small text-white">(คน - วันนี้)</small>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card text-white bg-info shadow-sm h-100"> <div class="card-body p-2">
+                                    <h6 class="card-title text-white"><i class="fas fa-user-clock me-1"></i> ลา / ไปราชการ</h6>
+                                    <p class="card-text text-white" id="leaveOrTripCount">0</p>
+                                    <small class="card-text-small text-white">(คน - วันนี้)</small>
+                                </div>
+                            </div>
+                        </div>
+                        </div>  
+
+			
                      <div class="row g-2 mb-3 align-items-center bg-light p-2 rounded border shadow-sm">
                          <div class="col-lg-3 col-md-6">
                              <label for="dashboardDateFilter" class="form-label small mb-0">เลือกวันที่:</label>
@@ -575,6 +583,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const buildingDutyCountEl = document.getElementById('buildingDutyCount');
 	const levelDutyCountEl = document.getElementById('levelDutyCount');
 	const pointCommitteeDutyCountEl = document.getElementById('pointCommitteeDutyCount');
+	const leaveOrTripCountEl = document.getElementById('leaveOrTripCount'); // <<<<<<<<<<<<<<<< เพิ่มบรรทัดนี้
+
         const dashboardDateFilterEl = document.getElementById('dashboardDateFilter');
         const dashboardLevelFilterEl = document.getElementById('dashboardLevelFilter');
         const dashboardDutyFilterEl = document.getElementById('dashboardDutyFilter');
@@ -916,19 +926,24 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-         function updateDashboardCards(counts) {
+function updateDashboardCards(counts) {
     if (counts) {
         if(loggedTodayCountEl) loggedTodayCountEl.textContent = `${counts.loggedToday || 0} / ${counts.totalTeachers || 0}`;
         if(gateDutyCountEl) gateDutyCountEl.textContent = `${counts.gateDutyLogged || 0}`;
         if(buildingDutyCountEl) buildingDutyCountEl.textContent = `${counts.buildingDutyLogged || 0}`;
-        if(levelDutyCountEl) levelDutyCountEl.textContent = `${counts.levelDutyLogged || 0}`; // Ensure this line is present
-        if(pointCommitteeDutyCountEl) pointCommitteeDutyCountEl.textContent = `${counts.pointCommitteeDutyLogged || 0}`; // Ensure this line is present
+        if(levelDutyCountEl) levelDutyCountEl.textContent = `${counts.levelDutyLogged || 0}`;
+        if(pointCommitteeDutyCountEl) pointCommitteeDutyCountEl.textContent = `${counts.pointCommitteeDutyLogged || 0}`;
+        if(leaveOrTripCountEl) { // <<<<<<<<<<<<<<<< เพิ่มส่วนนี้
+            const totalLeaveOrTrip = (counts.leaveLogged || 0) + (counts.businessTripLogged || 0);
+            leaveOrTripCountEl.textContent = `${totalLeaveOrTrip}`;
+        }
     } else {
         if(loggedTodayCountEl) loggedTodayCountEl.textContent = '0 / 0';
         if(gateDutyCountEl) gateDutyCountEl.textContent = '0';
         if(buildingDutyCountEl) buildingDutyCountEl.textContent = '0';
-        if(levelDutyCountEl) levelDutyCountEl.textContent = '0'; // Ensure this line is present
-        if(pointCommitteeDutyCountEl) pointCommitteeDutyCountEl.textContent = '0'; // Ensure this line is present
+        if(levelDutyCountEl) levelDutyCountEl.textContent = '0';
+        if(pointCommitteeDutyCountEl) pointCommitteeDutyCountEl.textContent = '0';
+        if(leaveOrTripCountEl) leaveOrTripCountEl.textContent = '0'; // <<<<<<<<<<<<<<<< เพิ่มส่วนนี้
     }
 }
 
